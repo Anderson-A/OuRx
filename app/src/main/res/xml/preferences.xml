@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="notifications_switch"
+        android:summary="@string/notifications_switch_summary"
+        android:title="@string/notifications_switch_title" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="password_switch"
+        android:summary="@string/password_switch_summary"
+        android:title="@string/password_switch_title" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="location_switch"
+        android:summary="@string/location_switch_summary"
+        android:title="@string/location_switch_title" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="night_switch"
+        android:title="@string/night_switch_title" />
+</PreferenceScreen>

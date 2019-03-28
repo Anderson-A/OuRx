@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">OuRx</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="nav_menu_cabinet">Medicine Cabinet</string>
+    <string name="nav_menu_find">Find Medication</string>
+    <string name="nav_menu_schedule">Schedule</string>
+    <string name="nav_menu_map">Pharmacy Map</string>
+    <string name="activity_medicine_cabinet">Medicine Cabinet</string>
+    <string name="activity_find_medication">Find Medication</string>
+    <string name="activity_medication_schedule">Medication Schedule</string>
+    <string name="activity_pharmacy_map">Pharmacy Map</string>
+    <string name="notifications_switch_title">Enable Notifications</string>
+    <string name="notifications_switch_summary">Turn notifications on or off for all medication reminders</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="activity_settings">Settings</string>
+    <string name="password_switch_title">Require Password on Start</string>
+    <string name="location_switch_title">Location Services</string>
+    <string name="night_switch_title">Night Mode</string>
+    <string name="password_switch_summary">Require a password when the app is first started</string>
+    <string name="location_switch_summary">Allow this app to determine your location</string>
+</resources>

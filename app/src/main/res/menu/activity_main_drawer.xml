@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_cabinet"
+            android:icon="@drawable/ic_menu_medicine"
+            android:title="@string/nav_menu_cabinet" />
+        <item
+            android:id="@+id/nav_find"
+            android:icon="@drawable/ic_menu_search"
+            android:title="@string/nav_menu_find" />
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_menu_schedule"
+            android:title="@string/nav_menu_schedule" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_menu_map"
+            android:title="@string/nav_menu_map" />
+    </group>
+
+</menu>
