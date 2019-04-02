@@ -18,6 +18,11 @@
                 android:value=".MainActivity"/>
         </activity>
         <activity
+            android:name=".AddMedication"
+            android:label="@string/activity_add_medication"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/activity_medication_schedule"
             android:theme="@style/AppTheme.NoActionBar">
@@ -27,6 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
