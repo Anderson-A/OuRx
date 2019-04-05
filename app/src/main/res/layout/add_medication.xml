@@ -330,13 +330,26 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="236dp"
-        android:layout_marginBottom="336dp"
+        android:layout_marginBottom="352dp"
         android:background="@mipmap/yellow_add"
         android:onClick="addTimes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
+    <Button
+        android:id="@+id/undo_time"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="320dp"
+        android:background="@mipmap/trash"
+        android:onClick="removeTimes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_time" />
+
+    <ListView
         android:id="@+id/times"
         android:layout_width="91dp"
         android:layout_height="81dp"
@@ -344,14 +357,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:scrollbars="horizontal"
+        android:scrollbars="vertical"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.482"
+        app:layout_constraintVertical_bias="0.481"
         tools:listitem='"Hello", "Here"' />
 
     <Button
