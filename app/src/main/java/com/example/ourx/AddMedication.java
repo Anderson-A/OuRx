@@ -4,17 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AddMedication extends AppCompatActivity {
@@ -22,8 +22,9 @@ CheckBox take_with_food, take_with_water, sun, mon, tues, wed, thurs, fri, sat;
 EditText dosage, special_instructions;
 Spinner unit, frequency;
 Button add_time, add_medication;
-RecyclerView times;
+ListView times;
 ArrayList<String> allTimes;
+ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,33 @@ ArrayList<String> allTimes;
 
         //Initialize the array of times
         allTimes = new ArrayList<>();
+
+        //Initialize adapter for the Time List
+        adapter = new ArrayAdapter<>(this, R.layout.all_times_list, allTimes);
+        times.setAdapter(adapter);
     }
 
     public void addTimes(View v) {
-        allTimes.add(frequency.getSelectedItem().toString());
-        Log.d("ALLTIMES SIZE: ", Integer.toString(allTimes.size()));
+        String item = frequency.getSelectedItem().toString();
+        if (allTimes.contains(item)) {
+            Snackbar snackbar = Snackbar.make(add_medication, "You have already added " + item + ".", Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        } else {
+            allTimes.add(item);
+            adapter.notifyDataSetChanged();
+        }
+        // times.set
+    }
+
+    public void removeTimes(View v) {
+        String item = frequency.getSelectedItem().toString();
+        if (allTimes.contains(item)) {
+            allTimes.remove(item);
+            adapter.notifyDataSetChanged();
+        } else {
+            Snackbar snackbar = Snackbar.make(add_medication, "You have not added " + item + ".", Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        }
         // times.set
     }
 
