@@ -20,12 +20,12 @@
         <activity
             android:name=".AddMedication"
             android:label="@string/activity_add_medication"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/activity_medication_schedule"
-            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
