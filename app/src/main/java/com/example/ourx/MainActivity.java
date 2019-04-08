@@ -1,11 +1,8 @@
 package com.example.ourx;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,9 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    boolean onPast = false;
+    ArrayList<MedicineCard> pastMeds = new ArrayList<>();
+    ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +31,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,6 +40,69 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /* Default when opening app will be Upcoming medicine */
+        TextView upcomingText = findViewById(R.id.upcoming);
+        upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+
+        /* TODO - Populate Past and Upcoming using database
+         * Just creating random samples right now */
+        MedicineCard tylenol = new MedicineCard("Tylenol", "12:00");
+        MedicineCard advil = new MedicineCard("Advil", "13:00");
+        MedicineCard Vyvanse = new MedicineCard("Vyvanse", "14:00");
+
+        pastMeds.add(tylenol);
+        upcomingMeds.add(Vyvanse);
+        upcomingMeds.add(advil);
+
+        /* ------------------------------------------------------------------------ */
+
+        if (onPast) {
+            this.displayPastCards();
+        } else {
+            this.displayUpcomingCards();
+        }
+
+        /* display past medications array */
+        final Button pastButton = findViewById(R.id.past);
+        pastButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onPast = true;
+                TextView pastText = findViewById(R.id.past);
+                TextView upcomingText = findViewById(R.id.upcoming);
+                pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                upcomingText.setPaintFlags(0);
+                displayPastCards();
+            }
+        });
+
+        /* display upcoming medications array */
+        Button upcomingButton = findViewById(R.id.upcoming);
+        upcomingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onPast = false;
+                TextView upcomingText = findViewById(R.id.upcoming);
+                TextView pastText = findViewById(R.id.past);
+                pastText.setPaintFlags(0);
+                upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                displayUpcomingCards();
+            }
+        });
+
+    }
+
+    /* Custom-built adapters to display list views of past/upcoming medicine cards */
+    private void displayPastCards() {
+        final MedCardAdapter adapter = new MedCardAdapter(this, pastMeds, true);
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+    }
+
+    private  void displayUpcomingCards() {
+        final MedCardAdapter adapter = new MedCardAdapter(this, upcomingMeds, false);
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -91,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cabinet) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_find) {
 
         } else if (id == R.id.nav_schedule) {
