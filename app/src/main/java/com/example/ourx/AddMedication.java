@@ -2,11 +2,9 @@ package com.example.ourx;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-
+import android.widget.TextView;
 import java.util.ArrayList;
 
 public class AddMedication extends AppCompatActivity {
@@ -25,11 +23,17 @@ Button add_time, add_medication;
 ListView times;
 ArrayList<String> allTimes;
 ArrayAdapter<String> adapter;
+TextView medication_name;
 
+    static final int REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_medication);
+
+
+        //Initialize Medication Name
+        medication_name = findViewById(R.id.medication_name);
 
         //Initialize Checkboxes
         take_with_food = findViewById(R.id.take_with_food);
@@ -63,6 +67,17 @@ ArrayAdapter<String> adapter;
         //Initialize adapter for the Time List
         adapter = new ArrayAdapter<>(this, R.layout.all_times_list, allTimes);
         times.setAdapter(adapter);
+
+        Intent intent = new Intent(AddMedication.this, SearchPopup.class);
+        startActivityForResult(intent, REQUEST_CODE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            medication_name.setText(data.getStringExtra("medication_name"));
+        }
     }
 
     public void addTimes(View v) {
@@ -86,7 +101,6 @@ ArrayAdapter<String> adapter;
             Snackbar snackbar = Snackbar.make(add_medication, "You have not added " + item + ".", Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
-        // times.set
     }
 
     public boolean onAddMedication(View v) {
@@ -106,6 +120,7 @@ ArrayAdapter<String> adapter;
         if (!requiredFieldsFilledIn) {
             return false;
         }
+        intent.putExtra("medication_name", medication_name.getText());
         intent.putExtra("all_times", allTimes);
 
         intent.putExtra("take_with_food", take_with_food.isChecked());
