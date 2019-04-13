@@ -1,5 +1,6 @@
 package com.example.ourx;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -16,13 +17,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    static final int REQUEST_CODE = 1;
     boolean onPast = false;
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
+    Date currentTime;
 
 
     @Override
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity
         /* Default when opening app will be Upcoming medicine */
         TextView upcomingText = findViewById(R.id.upcoming);
         upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+        currentTime = Calendar.getInstance().getTime();
 
 
         /* TODO - Populate Past and Upcoming using database
@@ -130,19 +136,55 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_add) {
-            Intent intent = new Intent(this, AddMedication.class);
-            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, AddMedication.class);
+            startActivityForResult(intent, REQUEST_CODE);
             return true;
         }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        currentTime = Calendar.getInstance().getTime();
+        Calendar test;
+
+        // This will find the time closest to the current time and put it in the Upcoming Medication array
+        if (resultCode == Activity.RESULT_OK) {
+            String medName = data.getStringExtra("medication_name");
+            String soonestTime = "";
+            for (String time : data.getStringArrayExtra("all_times")) {
+                String[] hourAndTime = time.split("\\s+");
+                int amOrPm;
+                if (hourAndTime[1].equals("am")) {
+                    amOrPm = 0;
+                } else {
+                    amOrPm = 1;
+                }
+                test = Calendar.getInstance();
+                test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
+                test.set(Calendar.AM_PM, amOrPm);
+
+                if (currentTime.before(test.getTime())){
+                    soonestTime = time;
+                    break;
+                }
+            }
+            if (soonestTime.length() > 0) {
+                MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
+                upcomingMeds.add(newlyAddedMedication);
+
+            }
+
+        }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

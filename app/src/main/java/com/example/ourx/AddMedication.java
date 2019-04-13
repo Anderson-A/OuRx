@@ -122,7 +122,7 @@ TextView medication_name;
             return false;
         }
         intent.putExtra("medication_name", medication_name.getText());
-        intent.putExtra("all_times", allTimes);
+        intent.putExtra("all_times", allTimes.toArray(new String[allTimes.size()]));
 
         intent.putExtra("take_with_food", take_with_food.isChecked());
         intent.putExtra("take_with_water", take_with_water.isChecked());

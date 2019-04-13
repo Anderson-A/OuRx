@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".AddMedication"
-            android:label="@string/activity_add_medication"
+            android:label="Add New Medication"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".MainActivity">
         </activity>
