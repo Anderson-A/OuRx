@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class AddMedication extends AppCompatActivity {
@@ -108,12 +109,12 @@ TextView medication_name;
         boolean requiredFieldsFilledIn = true;
         if (dosage.getText().toString().equals("")) {
             dosage.requestFocus();
-            // dosage.setBackground(Color.parseColor("#ff0000"));
+            Snackbar.make(add_medication, "Please enter a dosage.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
-        if (allTimes.size() == 0) {
-            frequency.requestFocus();
+        else if (allTimes.size() == 0) {
+            Snackbar.make(add_medication, "Please enter at least one time.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 

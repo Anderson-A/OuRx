@@ -241,7 +241,6 @@
         app:layout_constraintStart_toEndOf="@+id/special_instructions_text" />
 
     <EditText
-        android:theme="@style/EditTextUnderline"
         android:id="@+id/dosage"
         android:layout_width="114dp"
         android:layout_height="40dp"
