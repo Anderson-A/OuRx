@@ -31,7 +31,7 @@ public class SearchPopup extends Activity {
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
 
         // Initialize Search Bar
-        titles = new String[]{"Test", "wow", "WQEFWE"};
+        titles = getResources().getStringArray(R.array.medications);
         adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, titles);
         auto_complete = findViewById(R.id.search_results);
         auto_complete.setAdapter(adapter);

@@ -63,6 +63,49 @@
         <item>11pm</item>
     </string-array>
 
+    <string-array name="medications">
+        <item>Acetaminophen</item>
+        <item>Adderall</item>
+        <item>Alprazolam</item>
+        <item>Amitriptyline</item>
+        <item>Amlodipine</item>
+        <item>Amoxicillin</item>
+        <item>Ativan</item>
+        <item>Atorvastatin</item>
+        <item>Azithromycin</item>
+        <item>Ciprofloxacin</item>
+        <item>Citalopram</item>
+        <item>Clindamycin</item>
+        <item>Clonazepam</item>
+        <item>Codeine</item>
+        <item>Cyclobenzaprine</item>
+        <item>Cymbalta</item>
+        <item>Doxycycline</item>
+        <item>Gabapentin</item>
+        <item>Hydrochlorothiazide</item>
+        <item>Ibuprofen</item>
+        <item>Lexapro</item>
+        <item>Lisinopril</item>
+        <item>Loratadine</item>
+        <item>Lorazepam</item>
+        <item>Losartan</item>
+        <item>Lyrica</item>
+        <item>Meloxicam</item>
+        <item>Metformin</item>
+        <item>Metoprolol</item>
+        <item>Naproxen</item>
+        <item>Omeprazole</item>
+        <item>Oxycodone</item>
+        <item>Pantoprazole</item>
+        <item>Prednisone</item>
+        <item>Tramadol</item>
+        <item>Trazodone</item>
+        <item>Viagra</item>
+        <item>Wellbutrin</item>
+        <item>Xanax</item>
+        <item>Zoloft</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="activity_settings">Settings</string>
     <string name="activity_add_medication">Add</string>

@@ -14,8 +14,7 @@
         android:layout_marginStart="43dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="43dp"
-        android:hint="Search for medication"
-        android:phoneNumber="false" />
+        android:hint="Search for medication" />
 
     <Button
         android:id="@+id/button"
