@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ourx.OnSwipeTouchListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +32,7 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position,  View convertView, ViewGroup parent) {
 
         // Get the data item for this position
         MedicineCard medicineCard = getItem(position);
@@ -38,7 +40,7 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.medicine_card, parent, false);
         }
-
+        
         // Lookup view for medicine name & time to take
         TextView medName = (TextView) convertView.findViewById(R.id.med_name);
         TextView medTime = (TextView) convertView.findViewById(R.id.med_time);
