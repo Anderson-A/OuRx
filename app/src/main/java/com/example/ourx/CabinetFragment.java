@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class CabinetFragment extends ListFragment {
 
-    ArrayList<CabinetCard> medications = new ArrayList<>();
+    ArrayList<Medication> medications = new ArrayList<>();
 
     public CabinetFragment() {
         // Required empty public constructor
@@ -44,9 +44,12 @@ public class CabinetFragment extends ListFragment {
 
         medications.clear();
 
-        CabinetCard tylenol = new CabinetCard("Tylenol", "1", "");
-        CabinetCard advil = new CabinetCard("Advil", "2", "Take two pills");
-        CabinetCard vyvanse = new CabinetCard("Vyvanse", "1", "");
+        String[] times1 = {"10 am", "10 pm"};
+        String[] times2 = {"8am"};
+
+        Medication tylenol = new Medication("Tylenol", "1", "pill", 1, 0, times1, 1, 1, 1, 1, 1, 1, 1, "");
+        Medication advil = new Medication("Advil", "1", "pill", 0, 1, times1, 1, 1, 1, 1, 1, 1, 1, "");
+        Medication vyvanse = new Medication("Vyvanse", "2", "tablet", 0, 0, times2, 0, 1, 1, 1, 1, 1, 0, "Dissolve");;
 
         medications.add(tylenol);
         medications.add(advil);
@@ -121,23 +124,5 @@ public class CabinetFragment extends ListFragment {
         Log.d ("Cabinet Fragment", "onDetach");
         super.onDetach();
     }
-
-    /*@Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        medications.clear();
-
-        CabinetCard tylenol = new CabinetCard("Tylenol", "1", "");
-        CabinetCard advil = new CabinetCard("Advil", "2", "Take two pills");
-        CabinetCard vyvanse = new CabinetCard("Vyvanse", "1", "");
-
-        medications.add(tylenol);
-        medications.add(advil);
-        medications.add(vyvanse);
-
-        CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), medications);
-        setListAdapter(adapter);
-    }*/
 
 }

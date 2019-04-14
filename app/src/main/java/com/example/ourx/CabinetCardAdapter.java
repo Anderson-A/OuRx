@@ -9,11 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CabinetCardAdapter extends ArrayAdapter<CabinetCard> {
+public class CabinetCardAdapter extends ArrayAdapter<Medication> {
 
-    private String infoString = "Dosage: ";
-
-    public CabinetCardAdapter(Context context, ArrayList<CabinetCard> cards) {
+    public CabinetCardAdapter(Context context, ArrayList<Medication> cards) {
         super(context, 0, cards);
     }
 
@@ -21,26 +19,27 @@ public class CabinetCardAdapter extends ArrayAdapter<CabinetCard> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        CabinetCard cabinetCard = getItem(position);
+        Medication medication = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cabinet_card, parent, false);
         }
         // Lookup view for medicine name, dosage, and instructions
         TextView cabinetName = (TextView) convertView.findViewById(R.id.cabinet_name);
-        TextView cabinet_info = (TextView) convertView.findViewById(R.id.cabinet_info);
-        cabinetName.setText(cabinetCard.getCabinetName());
+        TextView cabinetInfo = (TextView) convertView.findViewById(R.id.cabinet_info);
+        cabinetName.setText(medication.getName());
 
-        String cardDosage = cabinetCard.getDosage();
-        String cardInstructions = cabinetCard.getInstructions();
+        String cardDosage = medication.getDosage();
+        String cardInstructions = medication.getInstructions();
+        String cardUnit = medication.getUnit();
 
-        String finalString;
+        String infoString = "Dosage: ";
         if (cardInstructions.equals("")) {
-            finalString = infoString + cardDosage + " pill";
+            infoString = infoString + cardDosage + " " + cardUnit;
         } else {
-            finalString = infoString + cardDosage + " pill\n" + cardInstructions;
+            infoString = infoString + cardDosage + " " + cardUnit + "\n" + cardInstructions;
         }
-        cabinet_info.setText(finalString);
+        cabinetInfo.setText(infoString);
 
         return convertView;
     }
