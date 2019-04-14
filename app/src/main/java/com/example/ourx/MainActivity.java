@@ -69,10 +69,8 @@ public class MainActivity extends AppCompatActivity
         View currView;
         if (onPast) {
             this.displayPastCards();
-            currView = findViewById(R.id.past);
         } else {
             this.displayUpcomingCards();
-            currView = findViewById((R.id.upcoming));
         }
 
         /* display past medications array */
@@ -238,7 +236,7 @@ public class MainActivity extends AppCompatActivity
         if (soonestTime.length() > 0) {
             MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
             upcomingMeds.add(newlyAddedMedication);
-
+            displayUpcomingCards();
         }
 
     }
