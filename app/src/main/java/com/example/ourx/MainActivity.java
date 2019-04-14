@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,11 +65,14 @@ public class MainActivity extends AppCompatActivity
         upcomingMeds.add(advil);
 
         /* ------------------------------------------------------------------------ */
-
+        OnSwipeTouchListener listener;
+        View currView;
         if (onPast) {
             this.displayPastCards();
+            currView = findViewById(R.id.past);
         } else {
             this.displayUpcomingCards();
+            currView = findViewById((R.id.upcoming));
         }
 
         /* display past medications array */
@@ -95,6 +100,42 @@ public class MainActivity extends AppCompatActivity
                 displayUpcomingCards();
             }
         });
+
+        currView = (ListView) findViewById(R.id.list_view);
+        currView.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeBottom() {
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                onPast = false;
+                TextView upcomingText = findViewById(R.id.upcoming);
+                TextView pastText = findViewById(R.id.past);
+                pastText.setPaintFlags(0);
+                upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                displayUpcomingCards();
+            }
+
+            @Override
+            public void onSwipeTop() {
+            }
+
+            @Override
+            public void onSwipeRight() {
+                onPast = true;
+                TextView pastText = findViewById(R.id.past);
+                TextView upcomingText = findViewById(R.id.upcoming);
+                pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                upcomingText.setPaintFlags(0);
+                displayPastCards();
+
+            }
+
+
+        });
+
+
 
     }
 
