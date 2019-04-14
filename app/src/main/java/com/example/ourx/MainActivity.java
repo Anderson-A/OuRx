@@ -105,12 +105,10 @@ public class MainActivity extends AppCompatActivity
         currView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeBottom() {
-                //Toast.makeText(MainActivity.this, "Down", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSwipeLeft() {
-                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
                 onPast = false;
                 TextView upcomingText = findViewById(R.id.upcoming);
                 TextView pastText = findViewById(R.id.past);
@@ -121,12 +119,10 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onSwipeTop() {
-                //Toast.makeText(MainActivity.this, "Up", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSwipeRight() {
-                Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
                 onPast = true;
                 TextView pastText = findViewById(R.id.past);
                 TextView upcomingText = findViewById(R.id.upcoming);

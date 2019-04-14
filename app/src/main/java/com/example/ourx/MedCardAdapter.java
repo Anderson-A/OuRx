@@ -40,7 +40,7 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.medicine_card, parent, false);
         }
-        
+
         // Lookup view for medicine name & time to take
         TextView medName = (TextView) convertView.findViewById(R.id.med_name);
         TextView medTime = (TextView) convertView.findViewById(R.id.med_time);
