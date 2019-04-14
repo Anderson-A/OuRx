@@ -1,0 +1,26 @@
+Team project 4
+First Sprint
+Kate Cheney, Anderson Adon, Rachel Rosset, Jake Flynn
+
+Overview: Our goals for this sprint were to build a basic skeleton and organize data (medication) into properly scheduled cards. We believed we accomplished
+this goal, as medication can be added and displayed in the schedule and cabinet. 
+
+Features:
+1. Medication Schedule
+    - This displays upcoming and past medications (currently hardcoded in -- all database tasks are for the next sprint)
+        - When we implement a database, we will sort medication from the last 24 hours into these two array adapters
+    - If a medication is still in upcoming past the time it was supposed to be taken, it will be red
+    - Added swipe functionality from past to upcoming 
+    - Added long press to move cards from past-to-upcoming and vice versa 
+
+2. Add Medication
+    - Allows a user to add a new medication to his/her cabinet
+    - User can enter information like dosage, if they should take with food or water, and how often they'd like to be reminded
+    - the medicine will then appear in the medicine cabinet.
+
+3. Medicine Cabinet
+    - Shows a user their medication. 
+    - Also shows a the medicine dosage. 
+
+
+
