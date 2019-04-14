@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity
 
         /* TODO - Populate Past and Upcoming using database
          * Just creating random samples right now */
-        MedicineCard tylenol = new MedicineCard("Tylenol", "12:00");
-        MedicineCard advil = new MedicineCard("Advil", "13:00");
-        MedicineCard Vyvanse = new MedicineCard("Vyvanse", "14:00");
+        MedicineCard tylenol = new MedicineCard("Tylenol", "12 pm");
+        MedicineCard advil = new MedicineCard("Advil", "1 pm");
+        MedicineCard Vyvanse = new MedicineCard("Vyvanse", "2 pm");
 
         pastMeds.add(tylenol);
         upcomingMeds.add(Vyvanse);
@@ -155,33 +155,48 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         currentTime = Calendar.getInstance().getTime();
         Calendar test;
-
+        Calendar bestTime = Calendar.getInstance();
         // This will find the time closest to the current time and put it in the Upcoming Medication array
         if (resultCode == Activity.RESULT_OK) {
-            String medName = data.getStringExtra("medication_name");
-            String soonestTime = "";
-            for (String time : data.getStringArrayExtra("all_times")) {
-                String[] hourAndTime = time.split("\\s+");
-                int amOrPm;
-                if (hourAndTime[1].equals("am")) {
-                    amOrPm = 0;
+            orderMedications(data.getStringExtra("medication_name"), data.getStringArrayExtra("all_times"));
+
+        }
+
+    }
+
+    public void orderMedications(String medName, String[] data) {
+        currentTime = Calendar.getInstance().getTime();
+        Calendar test;
+        Calendar bestTime = Calendar.getInstance();
+        String soonestTime = "";
+        for (String time : data) {
+            String[] hourAndTime = time.split("\\s+");
+            int amOrPm;
+            if (hourAndTime[1].equals("am")) {
+                amOrPm = 0;
+            } else {
+                amOrPm = 1;
+            }
+            test = Calendar.getInstance();
+            test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
+            test.set(Calendar.AM_PM, amOrPm);
+
+            if (currentTime.before(test.getTime())){
+                if (soonestTime.length() > 0) {
+
+                    if (test.before(bestTime)) {
+                        soonestTime = time;
+                        bestTime = test;
+                    }
                 } else {
-                    amOrPm = 1;
-                }
-                test = Calendar.getInstance();
-                test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
-                test.set(Calendar.AM_PM, amOrPm);
-
-                if (currentTime.before(test.getTime())){
                     soonestTime = time;
-                    break;
+                    bestTime = test;
                 }
             }
-            if (soonestTime.length() > 0) {
-                MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
-                upcomingMeds.add(newlyAddedMedication);
-
-            }
+        }
+        if (soonestTime.length() > 0) {
+            MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
+            upcomingMeds.add(newlyAddedMedication);
 
         }
 
