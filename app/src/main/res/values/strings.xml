@@ -114,4 +114,7 @@
     <string name="night_switch_title">Night Mode</string>
     <string name="password_switch_summary">Require a password when the app is first started</string>
     <string name="location_switch_summary">Allow this app to determine your location</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

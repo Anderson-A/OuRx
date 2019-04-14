@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,7 +29,8 @@ public class MainActivity extends AppCompatActivity
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
     Date currentTime;
-
+    private FragmentTransaction transaction;
+    private Fragment cabinetFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        cabinetFrag = new CabinetFragment();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -141,12 +146,12 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
-        //noinspection SimplifiableIfStatement
+        /*
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -194,13 +199,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cabinet) {
+            transaction = getSupportFragmentManager().beginTransaction();
 
+            transaction.replace(R.id.fragment_container, cabinetFrag);
+            transaction.addToBackStack(null);
+            transaction.commit();
         } else if (id == R.id.nav_find) {
 
         } else if (id == R.id.nav_schedule) {
 
         } else if (id == R.id.nav_map) {
 
+        } else  if (id == R.id.nav_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivityForResult(intent, REQUEST_CODE);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
