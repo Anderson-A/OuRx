@@ -24,13 +24,12 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    static final int REQUEST_CODE = 1;
-    boolean onPast = false;
-    ArrayList<MedicineCard> pastMeds = new ArrayList<>();
+    //static final int REQUEST_CODE = 1;
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
     Date currentTime;
     private FragmentTransaction transaction;
     private Fragment cabinetFrag;
+    private Fragment scheduleFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,74 +45,16 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         cabinetFrag = new CabinetFragment();
+        scheduleFrag = new ScheduleFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, scheduleFrag).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /* Default when opening app will be Upcoming medicine */
-        TextView upcomingText = findViewById(R.id.upcoming);
-        upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-
         currentTime = Calendar.getInstance().getTime();
 
-
-        /* TODO - Populate Past and Upcoming using database
-         * Just creating random samples right now */
-        MedicineCard tylenol = new MedicineCard("Tylenol", "12:00");
-        MedicineCard advil = new MedicineCard("Advil", "13:00");
-        MedicineCard Vyvanse = new MedicineCard("Vyvanse", "14:00");
-
-        pastMeds.add(tylenol);
-        upcomingMeds.add(Vyvanse);
-        upcomingMeds.add(advil);
-
-        /* ------------------------------------------------------------------------ */
-
-        if (onPast) {
-            this.displayPastCards();
-        } else {
-            this.displayUpcomingCards();
-        }
-
-        /* display past medications array */
-        final Button pastButton = findViewById(R.id.past);
-        pastButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onPast = true;
-                TextView pastText = findViewById(R.id.past);
-                TextView upcomingText = findViewById(R.id.upcoming);
-                pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                upcomingText.setPaintFlags(0);
-                displayPastCards();
-            }
-        });
-
-        /* display upcoming medications array */
-        Button upcomingButton = findViewById(R.id.upcoming);
-        upcomingButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onPast = false;
-                TextView upcomingText = findViewById(R.id.upcoming);
-                TextView pastText = findViewById(R.id.past);
-                pastText.setPaintFlags(0);
-                upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                displayUpcomingCards();
-            }
-        });
-
-    }
-
-    /* Custom-built adapters to display list views of past/upcoming medicine cards */
-    private void displayPastCards() {
-        final MedCardAdapter adapter = new MedCardAdapter(this, pastMeds, true);
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
-    }
-
-    private  void displayUpcomingCards() {
-        final MedCardAdapter adapter = new MedCardAdapter(this, upcomingMeds, false);
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
     }
 
     @Override
@@ -142,7 +83,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_add) {
             Intent intent = new Intent(MainActivity.this, AddMedication.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            //startActivityForResult(intent, REQUEST_CODE);
+            startActivity(intent);
             return true;
         }
 
@@ -156,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         currentTime = Calendar.getInstance().getTime();
         Calendar test;
@@ -190,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -201,18 +143,30 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_cabinet) {
             transaction = getSupportFragmentManager().beginTransaction();
 
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
             transaction.replace(R.id.fragment_container, cabinetFrag);
             transaction.addToBackStack(null);
+
+            // Commit the transaction
             transaction.commit();
         } else if (id == R.id.nav_find) {
 
         } else if (id == R.id.nav_schedule) {
+            transaction = getSupportFragmentManager().beginTransaction();
 
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, scheduleFrag);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
         } else if (id == R.id.nav_map) {
 
         } else  if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

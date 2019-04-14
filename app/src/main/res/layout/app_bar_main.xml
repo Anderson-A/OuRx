@@ -20,15 +20,16 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!--
     <include
         android:id="@+id/include"
-        layout="@layout/content_main" />
+        layout="@layout/content_main" />-->
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"></FrameLayout>
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
