@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,13 +67,10 @@ public class MainActivity extends AppCompatActivity
 
         /* ------------------------------------------------------------------------ */
         OnSwipeTouchListener listener;
-        View currView;
         if (onPast) {
             this.displayPastCards();
-            currView = findViewById(R.id.past);
         } else {
             this.displayUpcomingCards();
-            currView = findViewById((R.id.upcoming));
         }
 
         /* display past medications array */
@@ -101,8 +99,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        currView = (ListView) findViewById(R.id.list_view);
-        currView.setOnTouchListener(new OnSwipeTouchListener(this) {
+        ListView listView = findViewById(R.id.list_view);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+
+                //Toast.makeText(MainActivity.this, "works!!!", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
+        listView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeBottom() {
             }
@@ -142,14 +151,17 @@ public class MainActivity extends AppCompatActivity
     /* Custom-built adapters to display list views of past/upcoming medicine cards */
     private void displayPastCards() {
         final MedCardAdapter adapter = new MedCardAdapter(this, pastMeds, true);
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+
     }
+
 
     private  void displayUpcomingCards() {
         final MedCardAdapter adapter = new MedCardAdapter(this, upcomingMeds, false);
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+
     }
 
     @Override

@@ -18,6 +18,7 @@
         android:layout_marginBottom="16dp"
         android:background="@mipmap/pill_bottle"
         android:padding="10dp"
+        android:longClickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

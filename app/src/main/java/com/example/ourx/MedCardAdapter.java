@@ -2,10 +2,13 @@ package com.example.ourx;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
 
     private String timeString;
     private boolean needToCheckHour;
+    private ArrayList<MedicineCard> currMeds;
 
     public MedCardAdapter(Context context, ArrayList<MedicineCard> users, boolean isPast) {
         super(context, 0, users);
@@ -27,12 +31,12 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         } else {
             timeString = "Take today at ";
         }
-
         needToCheckHour = !isPast;
+        currMeds = users;
     }
 
     @Override
-    public View getView(int position,  View convertView, ViewGroup parent) {
+    public View getView(final int position,  View convertView, ViewGroup parent) {
 
         // Get the data item for this position
         MedicineCard medicineCard = getItem(position);
@@ -42,7 +46,7 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         }
 
         // Lookup view for medicine name & time to take
-        TextView medName = (TextView) convertView.findViewById(R.id.med_name);
+        final TextView medName = (TextView) convertView.findViewById(R.id.med_name);
         TextView medTime = (TextView) convertView.findViewById(R.id.med_time);
         medName.setText(medicineCard.getName());
 
@@ -60,6 +64,13 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
             }
         }
 
+        ImageView imName = convertView.findViewById(R.id.pill_image);
+        imName.setOnLongClickListener(new View.OnLongClickListener(){
+            public boolean onLongClick(View v) {
+                currMeds.remove(position);
+                return true;
+            }
+        });
         // Return the completed view to render on screen
         return convertView;
     }
