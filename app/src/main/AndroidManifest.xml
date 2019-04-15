@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".CabinetActivity"
-            android:label="@string/activity_medication_schedule"
+            android:label="@string/nav_menu_cabinet"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
