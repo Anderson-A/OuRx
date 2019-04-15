@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ourx">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:screenOrientation="portrait" >
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".CabinetActivity"
+            android:label="@string/activity_medication_schedule"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/activity_settings"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".AddMedication"
             android:label="Add New Medication"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity android:name=".SearchPopup"
-            android:theme="@style/AppTheme.Popup"/>
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".SearchPopup"
+            android:theme="@style/AppTheme.Popup" />
         <activity
             android:name=".MainActivity"
             android:label="@string/activity_medication_schedule"
@@ -35,7 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
