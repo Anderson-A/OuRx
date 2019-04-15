@@ -21,6 +21,8 @@ public class CabinetActivity extends AppCompatActivity
     static final int REQUEST_CODE = 1;
     ArrayList<CabinetCard> medications = new ArrayList<>();
     CabinetCardAdapter adapter;
+    String medName;
+    String[] time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +89,15 @@ public class CabinetActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            String medName = data.getStringExtra("medication_name");
+            medName = data.getStringExtra("medication_name");
             String dosage =  data.getStringExtra("dosage");
             String instr = data.getStringExtra("special_instructions");
             String unit = data.getStringExtra("units");
 
             CabinetCard newMed = new CabinetCard(medName, dosage, unit, instr);
             adapter.add(newMed);
+
+            time = data.getStringArrayExtra("all_times");
         }
     }
 
@@ -108,7 +112,10 @@ public class CabinetActivity extends AppCompatActivity
         } else if (id == R.id.nav_find) {
 
         } else if (id == R.id.nav_schedule) {
+            /* For demo purposes only, eventually this will just be added to database */
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("medName", medName);
+            intent.putExtra("times", time);
             startActivity(intent);
             return true;
         } else if (id == R.id.nav_map) {
