@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
     Date currentTime;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,11 +182,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -250,13 +249,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cabinet) {
-
+            Intent intent = new Intent(this, CabinetActivity.class);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_find) {
 
         } else if (id == R.id.nav_schedule) {
 
         } else if (id == R.id.nav_map) {
 
+        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
