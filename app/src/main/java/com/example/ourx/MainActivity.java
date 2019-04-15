@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +56,16 @@ public class MainActivity extends AppCompatActivity
 
         /* TODO - Populate Past and Upcoming using database
          * Just creating random samples right now */
+
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("medName")) {
+            String name = intent.getStringExtra("medName");
+            String[] time = intent.getStringArrayExtra("times");
+            MedicineCard med1 = new MedicineCard(name, time[0]);
+            upcomingMeds.add(med1);
+        }
+
         MedicineCard tylenol = new MedicineCard("Tylenol", "12 pm");
         MedicineCard advil = new MedicineCard("Advil", "1 pm");
         MedicineCard Vyvanse = new MedicineCard("Vyvanse", "2 pm");
@@ -189,6 +200,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         currentTime = Calendar.getInstance().getTime();
@@ -239,7 +251,7 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

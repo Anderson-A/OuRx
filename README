@@ -2,8 +2,9 @@ Team project 4
 First Sprint
 Kate Cheney, Anderson Adon, Rachel Rosset, Jake Flynn
 
-Overview: Our goals for this sprint were to build a basic skeleton and organize data (medication) into properly scheduled cards. We believed we accomplished
-this goal, as medication can be added and displayed in the schedule and cabinet. 
+Overview: Our goals for this sprint were to build a basic skeleton and organize data (medication) into properly scheduled cards. We believe 
+we accomplished this goal. We decided to only (for demo purposes) allow adding a single medication to cabinet/schedule because when we implement
+the database we will be adding the medication strictly to the database and then refreshing from the database whenever a new page is loaded.  
 
 Features:
 1. Medication Schedule
@@ -21,6 +22,7 @@ Features:
 3. Medicine Cabinet
     - Shows a user their medication. 
     - Also shows a the medicine dosage. 
+
 
 
 

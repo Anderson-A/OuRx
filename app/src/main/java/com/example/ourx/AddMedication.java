@@ -105,6 +105,7 @@ TextView medication_name;
     }
 
     public boolean onAddMedication(View v) {
+        /* For demo purposes only, eventually this will just be added to database */
         Intent intent = new Intent();
         boolean requiredFieldsFilledIn = true;
         if (dosage.getText().toString().equals("")) {
