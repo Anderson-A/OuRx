@@ -2,9 +2,9 @@ package com.example.ourx;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +66,7 @@ public class CabinetFragment extends ListFragment {
         Log.d ("Cabinet Fragment", "onResume");
         // Resume any paused UI updates, threads, or processes required
         // by the Fragment but suspended when it became inactive.
-        ((MainActivity) getActivity()).setActionBarTitle("Medicine Cabinet");
+ //       ((MainActivity) getActivity()).setActionBarTitle("Medicine Cabinet");
     }
 
     // Called at the end of the active lifetime.

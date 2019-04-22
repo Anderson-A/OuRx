@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ourx.OnSwipeTouchListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /* Source: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView */
 public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
@@ -25,11 +28,11 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
             timeString = "Take today at ";
         }
 
-        needToCheckHour = isPast;
+        needToCheckHour = !isPast;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position,  View convertView, ViewGroup parent) {
 
         // Get the data item for this position
         MedicineCard medicineCard = getItem(position);
@@ -47,22 +50,13 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         medTime.setText(finalString);
 
         /* TODO if time to take after current time outline red */
-        Calendar rightNow = Calendar.getInstance();
-        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
-        int currentMin = rightNow.get(Calendar.MINUTE);
-        int medHour = parseHour(medicineCard.getTimeToTake());
-        int medMinute = parseMinute(medicineCard.getTimeToTake());
+        Date rightNow = Calendar.getInstance().getTime();
+        Date medicationTime = parseTime(medicineCard.getTimeToTake());
 
-
-        /* In past mode, aka need to check the hour */
+        /* In upcoming mode, aka need to check the hour */
         if (needToCheckHour && !medicineCard.isTaken()) {
-            if (currentHour > medHour) {
+            if (medicationTime.before(rightNow)) {
                 medName.setTextColor(Color.parseColor("#f44253"));
-
-            } else if (currentHour == medHour) {
-                if (currentMin > medMinute) {
-                    medName.setTextColor(Color.parseColor("#f44253"));
-                }
             }
         }
 
@@ -70,20 +64,19 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         return convertView;
     }
 
-    private int parseHour(String time) {
-        int colonIndex = time.indexOf(':');
-        if (colonIndex < 0 || colonIndex > 2) {
-            return -1;
+    private Date parseTime(String time) {
+        Calendar test;
+        String[] hourAndTime = time.split("\\s+");
+        int amOrPm;
+        if (hourAndTime[1].equals("am")) {
+            amOrPm = 0;
+        } else {
+            amOrPm = 1;
         }
+        test = Calendar.getInstance();
+        test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
+        test.set(Calendar.AM_PM, amOrPm);
 
-        else return Integer.parseInt(time.substring(0, colonIndex));
-    }
-
-    private int parseMinute(String time) {
-        int colonIndex = time.indexOf(':');
-        if (colonIndex < 0 || colonIndex > 2) {
-            return -1;
-        }
-        else return Integer.parseInt(time.substring(colonIndex + 1));
+        return test.getTime();
     }
 }

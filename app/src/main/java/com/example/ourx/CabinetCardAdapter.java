@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CabinetCardAdapter extends ArrayAdapter<Medication> {
+public class CabinetCardAdapter extends ArrayAdapter<CabinetCard> {
 
-    public CabinetCardAdapter(Context context, ArrayList<Medication> cards) {
+    public CabinetCardAdapter(Context context, ArrayList<CabinetCard> cards) {
         super(context, 0, cards);
     }
 
@@ -19,7 +19,7 @@ public class CabinetCardAdapter extends ArrayAdapter<Medication> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        Medication medication = getItem(position);
+        CabinetCard card = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cabinet_card, parent, false);
@@ -27,18 +27,41 @@ public class CabinetCardAdapter extends ArrayAdapter<Medication> {
         // Lookup view for medicine name, dosage, and instructions
         TextView cabinetName = (TextView) convertView.findViewById(R.id.cabinet_name);
         TextView cabinetInfo = (TextView) convertView.findViewById(R.id.cabinet_info);
-        cabinetName.setText(medication.getName());
+        cabinetName.setText(card.getCabinetName());
 
-        String cardDosage = medication.getDosage();
-        String cardInstructions = medication.getInstructions();
-        String cardUnit = medication.getUnit();
+        String cardDosage = card.getDosage();
+        String cardInstructions = card.getInstructions();
+        String cardUnit = card.getUnit();
 
         String infoString = "Dosage: ";
-        if (cardInstructions.equals("")) {
-            infoString = infoString + cardDosage + " " + cardUnit;
+        /*if (cardInstructions.equals("")) {
+            infoString = infoString + cardDosage + " pill";
         } else {
-            infoString = infoString + cardDosage + " " + cardUnit + "\n" + cardInstructions;
+            infoString = infoString + cardDosage + " pill\n" + cardInstructions;
+        }*/
+
+        if (cardUnit.equals("mL") || cardUnit.equals("mg")) {
+            if (cardInstructions.equals("")) {
+                infoString = infoString + cardDosage + " " + cardUnit;
+            } else {
+                infoString = infoString + cardDosage + " " + cardUnit + "\n" + cardInstructions;
+            }
+        } else {
+            if (Integer.parseInt(cardDosage) > 1) {
+                if (cardInstructions.equals("")) {
+                    infoString = infoString + cardDosage + " " + cardUnit + "s";
+                } else {
+                    infoString = infoString + cardDosage + " " + cardUnit + "s\n" + cardInstructions;
+                }
+            } else {
+                if (cardInstructions.equals("")) {
+                    infoString = infoString + cardDosage + " " + cardUnit;
+                } else {
+                    infoString = infoString + cardDosage + " " + cardUnit + "\n" + cardInstructions;
+                }
+            }
         }
+
         cabinetInfo.setText(infoString);
 
         return convertView;

@@ -7,12 +7,18 @@ public class CabinetCard {
     //private Boolean takeWithFood;
     //private Boolean takeWithWater;
     private String instructions;
+    private String unit;
+    private String timeToTake;
+    private boolean taken;
     //private String nextReminder;
 
-    public CabinetCard(String name, String dosage, String instructions) {
+    public CabinetCard(String name, String dosage, String units, String instructions/*, String time*/) {
         this.name = name;
         this.dosage = dosage;
+        this.unit = units;
         this.instructions = instructions;
+        //this.taken = false;
+        //this.timeToTake = time;
     }
 
     public String getDosage() { return this.dosage; }
@@ -22,4 +28,14 @@ public class CabinetCard {
     public String getCabinetName() {
         return this.name;
     }
+
+    public String getUnit() { return this.unit; }
+
+    //public Boolean getTakeWithFood() { return this.takeWithFood; }
+
+    //public Boolean getTakeWithWater() { return this.takeWithWater; }
+
+    //public String getTimeToTake { return this.timeToTake; }
+
+    //public boolean isTaken() { return taken; }
 }

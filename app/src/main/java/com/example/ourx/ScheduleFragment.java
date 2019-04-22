@@ -3,16 +3,26 @@ package com.example.ourx;
 
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -42,25 +52,20 @@ public class ScheduleFragment extends Fragment {
         Log.d ("Schedule Fragment", "onStart");
         // Apply any required UI change now that the Fragment is visible.
 
+        /* The viewModel to hold all data (separates data from activity instances */
+        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+
         pastMeds.clear();
         upcomingMeds.clear();
 
-        TextView upcomingText = getView().findViewById(R.id.upcoming);
-        upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-
-        /* TODO - Populate Past and Upcoming using database
-         * Just creating random samples right now */
-        MedicineCard tylenol = new MedicineCard("Tylenol", "12:00");
-        MedicineCard advil = new MedicineCard("Advil", "13:00");
-        MedicineCard Vyvanse = new MedicineCard("Vyvanse", "14:00");
-
-        pastMeds.add(tylenol);
-        upcomingMeds.add(Vyvanse);
-        upcomingMeds.add(advil);
-
+        /* underlines the correct button and displays the correct card array */
         if (onPast) {
+            TextView pastText = getView().findViewById(R.id.past);
+            pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
             this.displayPastCards();
         } else {
+            TextView upcomingText = getView().findViewById(R.id.upcoming);
+            upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
             this.displayUpcomingCards();
         }
 
@@ -89,6 +94,98 @@ public class ScheduleFragment extends Fragment {
                 displayUpcomingCards();
             }
         });
+
+
+        /* Listen for changes in the medications database and display them */
+        medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
+            @Override
+            public void onChanged(@Nullable final List<MedicineEntity> meds) {
+                ArrayList<MedicineCard> medCards = entityToMedCard(meds);
+                pastMeds = parsePast(medCards);
+                upcomingMeds = parseUpcoming(medCards);
+                if (onPast) {
+                    displayPastCards();
+                } else {
+                    displayUpcomingCards();
+                }
+            }
+        });
+    }
+
+    /* Parses medicine cards by determining if they are scheduled in the past */
+    private ArrayList<MedicineCard> parsePast(ArrayList<MedicineCard> medicineCards) {
+        ArrayList<MedicineCard> pastMedications = new ArrayList<>();
+        Date rightNow = Calendar.getInstance().getTime();
+        for (MedicineCard medicineCard : medicineCards) {
+            Date medicationTime = parseTime(medicineCard.getTimeToTake());
+            Log.d("insert", "is taken: " + medicineCard.getName() + " taken " + medicineCard.isTaken());
+            Log.d("insert", "med time before " + medicationTime.before(rightNow));
+            if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
+                pastMedications.add(medicineCard);
+            }
+        }
+
+        return pastMedications;
+    }
+
+    /* Parses medicine cards by determining if they are scheduled in the future */
+    private ArrayList<MedicineCard> parseUpcoming(ArrayList<MedicineCard> medicineCards) {
+        ArrayList<MedicineCard> futureMedications = new ArrayList<>();
+        for (MedicineCard medicineCard : medicineCards) {
+            Date rightNow = Calendar.getInstance().getTime();
+            Date medicationTime = parseTime(medicineCard.getTimeToTake());
+            if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
+                futureMedications.add(medicineCard);
+            }
+        }
+        return futureMedications;
+    }
+
+    /* thanks @jake */
+    private Date parseTime(String time) {
+        Calendar test;
+        String[] hourAndTime = time.split("\\s+");
+        int amOrPm;
+        if (hourAndTime[1].equals("am")) {
+            amOrPm = 0;
+        } else {
+            amOrPm = 1;
+        }
+        test = Calendar.getInstance();
+        test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
+        test.set(Calendar.AM_PM, amOrPm);
+
+        return test.getTime();
+    }
+
+    /* Turns medicine entities into med cards to display in schedule */
+    private ArrayList<MedicineCard> entityToMedCard(List<MedicineEntity> meds) {
+        ArrayList<MedicineCard> medCards = new ArrayList<>();
+        for (MedicineEntity med : meds) {
+            boolean taken = false;
+            if (med.MED_TAKEN.equals("true")) {
+                taken = true;
+            }
+
+            /* TODO: find solution to distinguish what time something has been taken
+             * Idea 1: have 5 columns (taken 1, taken 2, etc)
+             * Idea 2: original idea of a new entry for each time. Updating problem. */
+            medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_ONE, taken));
+            /* Displays each new time instance as a new card */
+            if (med.MED_TIME_TWO != null) {
+                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_TWO, taken));
+            }
+            if (med.MED_TIME_THREE != null) {
+                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_THREE, taken));
+            }
+            if (med.MED_TIME_FOUR != null) {
+                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FOUR, taken));
+            }
+            if (med.MED_TIME_FIVE != null) {
+                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FIVE, taken));
+            }
+        }
+        return medCards;
     }
 
     /* Custom-built adapters to display list views of past/upcoming medicine cards */
