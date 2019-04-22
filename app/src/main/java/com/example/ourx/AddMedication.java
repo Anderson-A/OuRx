@@ -6,8 +6,6 @@ import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -180,14 +178,15 @@ public class AddMedication extends AppCompatActivity {
         }
 
         /* Creates a new medication entry based on entered data */
-        MedicineEntity medicineEntity = new MedicineEntity(currentMedId, medication_name.getText().toString(), dosage.getText().toString(), unit.toString(),
-                takeWithFoodEntry, takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
+        MedicineEntity medicineEntity = new MedicineEntity(currentMedId, medication_name.getText().toString(),
+                dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
+                takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
                 medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,
                 saturday, instr, "false");
 
         /* Inserts the entity into the database */
         medicineViewModel.insert(medicineEntity);
-        currentMedId++;
+        currentMedId++; // tracks the current medID. Hardcoded to start at 2 because initial population is 1. Need to fix.
 
         finish();
         return true;
