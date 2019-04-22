@@ -5,13 +5,16 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,7 +22,7 @@ import java.util.ArrayList;
  */
 public class CabinetFragment extends ListFragment {
 
-    ArrayList<Medication> medications = new ArrayList<>();
+    private ArrayList<CabinetCard> medications = new ArrayList<>();
 
     public CabinetFragment() {
         // Required empty public constructor
@@ -44,19 +47,33 @@ public class CabinetFragment extends ListFragment {
 
         medications.clear();
 
-        String[] times1 = {"10 am", "10 pm"};
-        String[] times2 = {"8am"};
+        /* The viewModel to hold all data (separates data from activity instances */
+        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
-        Medication tylenol = new Medication("Tylenol", "1", "pill", 1, 0, times1, 1, 1, 1, 1, 1, 1, 1, "");
-        Medication advil = new Medication("Advil", "1", "pill", 0, 1, times1, 1, 1, 1, 1, 1, 1, 1, "");
-        Medication vyvanse = new Medication("Vyvanse", "2", "tablet", 0, 0, times2, 0, 1, 1, 1, 1, 1, 0, "Dissolve");;
+        /* Listen for changes in the medications database and display them */
+        medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
+            @Override
+            public void onChanged(@Nullable final List<MedicineEntity> meds) {
+                medications = entityToCabCard(meds);
+                final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), medications);
+                setListAdapter(adapter);
+            }
+        });
 
-        medications.add(tylenol);
-        medications.add(advil);
-        medications.add(vyvanse);
 
-        CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), medications);
-        setListAdapter(adapter);
+    }
+
+    /* Turns medicine entities into cabinet cards to display in schedule */
+    private ArrayList<CabinetCard> entityToCabCard(List<MedicineEntity> meds) {
+        ArrayList<CabinetCard> cabinetCards = new ArrayList<>();
+        for (MedicineEntity med : meds) {
+            cabinetCards.add(new CabinetCard(
+                    med.MED_NAME,
+                    med.MED_DOSAGE,
+                    med.MED_UNIT,
+                    med.MED_INSTRUCT));
+        }
+        return cabinetCards;
     }
 
     // Called at the start of the active lifetime.
