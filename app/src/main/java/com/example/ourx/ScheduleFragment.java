@@ -69,7 +69,7 @@ public class ScheduleFragment extends Fragment {
             this.displayUpcomingCards();
         }
 
-        /* display past medications array */
+        /* display past medications array on click */
         final Button pastButton = getView().findViewById(R.id.past);
         pastButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,7 +82,7 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
-        /* display upcoming medications array */
+        /* display upcoming medications array on click */
         Button upcomingButton = getView().findViewById(R.id.upcoming);
         upcomingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -118,8 +118,6 @@ public class ScheduleFragment extends Fragment {
         Date rightNow = Calendar.getInstance().getTime();
         for (MedicineCard medicineCard : medicineCards) {
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
-            Log.d("insert", "is taken: " + medicineCard.getName() + " taken " + medicineCard.isTaken());
-            Log.d("insert", "med time before " + medicationTime.before(rightNow));
             if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
                 pastMedications.add(medicineCard);
             }
@@ -209,7 +207,7 @@ public class ScheduleFragment extends Fragment {
         // Resume any paused UI updates, threads, or processes required
         // by the Fragment but suspended when it became inactive.
 
-        ((MainActivity) getActivity()).setActionBarTitle("Schedule");
+  //      ((MainActivity) getActivity()).setActionBarTitle("Schedule");
     }
 
     // Called at the end of the active lifetime.
