@@ -48,7 +48,7 @@ public class CabinetCardAdapter extends ArrayAdapter<CabinetCard> {
             }
         } else {
             if (Integer.parseInt(cardDosage) > 1) {
-                if (cardInstructions.equals("")) {
+                if (cardInstructions == null) {
                     infoString = infoString + cardDosage + " " + cardUnit + "s";
                 } else {
                     infoString = infoString + cardDosage + " " + cardUnit + "s\n" + cardInstructions;
