@@ -41,14 +41,14 @@ public class CabinetCardAdapter extends ArrayAdapter<CabinetCard> {
         }*/
 
         if (cardUnit.equals("mL") || cardUnit.equals("mg")) {
-            if (cardInstructions.equals("")) {
+            if (cardInstructions == null) {
                 infoString = infoString + cardDosage + " " + cardUnit;
             } else {
                 infoString = infoString + cardDosage + " " + cardUnit + "\n" + cardInstructions;
             }
         } else {
             if (Integer.parseInt(cardDosage) > 1) {
-                if (cardInstructions.equals("")) {
+                if (cardInstructions == null) {
                     infoString = infoString + cardDosage + " " + cardUnit + "s";
                 } else {
                     infoString = infoString + cardDosage + " " + cardUnit + "s\n" + cardInstructions;
