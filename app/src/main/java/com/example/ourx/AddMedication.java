@@ -3,8 +3,9 @@ package com.example.ourx;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,14 +18,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class AddMedication extends AppCompatActivity {
-CheckBox take_with_food, take_with_water, sun, mon, tues, wed, thurs, fri, sat;
-EditText dosage, special_instructions;
-Spinner unit, frequency;
-Button add_time, add_medication;
-ListView times;
-ArrayList<String> allTimes;
-ArrayAdapter<String> adapter;
-TextView medication_name;
+    CheckBox take_with_food, take_with_water, sun, mon, tues, wed, thurs, fri, sat;
+    EditText dosage, special_instructions;
+    Spinner unit, frequency;
+    Button add_time, add_medication;
+    ListView times;
+    ArrayList<String> allTimes;
+    ArrayAdapter<String> adapter;
+    TextView medication_name;
+
+    private static int currentMedId = 2;
 
     static final int REQUEST_CODE = 1;
     @Override
@@ -90,7 +93,6 @@ TextView medication_name;
             allTimes.add(item);
             adapter.notifyDataSetChanged();
         }
-        // times.set
     }
 
     public void removeTimes(View v) {
@@ -105,8 +107,8 @@ TextView medication_name;
     }
 
     public boolean onAddMedication(View v) {
-        /* For demo purposes only, eventually this will just be added to database */
-        Intent intent = new Intent();
+        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+
         boolean requiredFieldsFilledIn = true;
         if (dosage.getText().toString().equals("")) {
             dosage.requestFocus();
@@ -119,32 +121,73 @@ TextView medication_name;
             requiredFieldsFilledIn = false;
         }
 
+        else if (allTimes.size() > 5) {
+            Snackbar.make(add_medication, "No More than 5 times.", Snackbar.LENGTH_SHORT).show();
+            requiredFieldsFilledIn = false;
+        }
+
         if (!requiredFieldsFilledIn) {
             return false;
         }
-        intent.putExtra("medication_name", medication_name.getText());
-        intent.putExtra("all_times", allTimes.toArray(new String[allTimes.size()]));
-        intent.putExtra("dosage", dosage.getText().toString());
 
-        intent.putExtra("units", unit.getSelectedItem().toString());
+        String takeWithFoodEntry = null;
+        String takeWithWaterEntry = null;
 
-        intent.putExtra("take_with_food", take_with_food.isChecked());
-        intent.putExtra("take_with_water", take_with_water.isChecked());
+        String medTimeOne = allTimes.get(0);
+        String medTimeTwo = null;
+        String medTimeThree = null;
+        String medTimeFour = null;
+        String medTimeFive = null;
 
-        intent.putExtra("sun", sun.isChecked());
-        intent.putExtra("mon", mon.isChecked());
-        intent.putExtra("tues", tues.isChecked());
-        intent.putExtra("wed", wed.isChecked());
-        intent.putExtra("thurs", thurs.isChecked());
-        intent.putExtra("fri", fri.isChecked());
-        intent.putExtra("sat", sat.isChecked());
+        String sunday = null;
+        String monday = null;
+        String tuesday = null;
+        String wednesday = null;
+        String thursday = null;
+        String friday = null;
+        String saturday = null;
+
+        String instr = null;
+
+        try { medTimeTwo = allTimes.get(1); }
+        catch (IndexOutOfBoundsException e) {}
+
+        try { medTimeThree = allTimes.get(2); }
+        catch (IndexOutOfBoundsException e) {}
+
+        try { medTimeFour = allTimes.get(3); }
+        catch (IndexOutOfBoundsException e) {}
+
+        try { medTimeFive = allTimes.get(4); }
+        catch (IndexOutOfBoundsException e) {}
+
+        if (take_with_food.isChecked()) { takeWithFoodEntry = "yes"; }
+        if (take_with_water.isChecked()) { takeWithWaterEntry = "yes"; }
+        if (sun.isChecked()) { sunday = "yes"; }
+        if (mon.isChecked()) { monday = "yes"; }
+        if (tues.isChecked()) { tuesday = "yes"; }
+        if (wed.isChecked()) { wednesday = "yes"; }
+        if (thurs.isChecked()) { thursday = "yes"; }
+        if (fri.isChecked()) { friday = "yes"; }
+        if (sat.isChecked()) { saturday = "yes"; }
 
         if (special_instructions.getText().toString().equals("")) {
-            intent.putExtra("special_instructions", "");
+            instr = null;
         } else {
-            intent.putExtra("special_instructions", special_instructions.getText().toString());
+            instr = special_instructions.getText().toString();
         }
-        setResult(Activity.RESULT_OK, intent);
+
+        /* Creates a new medication entry based on entered data */
+        MedicineEntity medicineEntity = new MedicineEntity(currentMedId, medication_name.getText().toString(),
+                dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
+                takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
+                medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,
+                saturday, instr, "false");
+
+        /* Inserts the entity into the database */
+        medicineViewModel.insert(medicineEntity);
+        currentMedId++; // tracks the current medID. Hardcoded to start at 2 because initial population is 1. Need to fix.
+
         finish();
         return true;
     }

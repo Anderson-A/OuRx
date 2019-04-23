@@ -6,10 +6,10 @@ public class MedicineCard {
     private String timeToTake;
     private boolean taken;
 
-    MedicineCard(String medName, String time) {
+    MedicineCard(String medName, String time, boolean taken) {
         this.name = medName;
         this.timeToTake = time;
-        this.taken = false;
+        this.taken = taken;
     }
 
     public String getName() {

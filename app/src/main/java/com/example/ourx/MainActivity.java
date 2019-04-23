@@ -1,35 +1,30 @@
 package com.example.ourx;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    static final int REQUEST_CODE = 1;
-    boolean onPast = false;
-    ArrayList<MedicineCard> pastMeds = new ArrayList<>();
+    //static final int REQUEST_CODE = 1;
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
     Date currentTime;
+    private FragmentTransaction transaction;
+    private Fragment cabinetFrag;
+    private Fragment scheduleFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,120 +39,17 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        cabinetFrag = new CabinetFragment();
+        scheduleFrag = new ScheduleFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, scheduleFrag).commit();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /* Default when opening app will be Upcoming medicine */
-        TextView upcomingText = findViewById(R.id.upcoming);
-        upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-
         currentTime = Calendar.getInstance().getTime();
 
-
-        /* TODO - Populate Past and Upcoming using database
-         * Just creating random samples right now */
-
-
-        Intent intent = getIntent();
-        if (intent.hasExtra("medName")) {
-            String name = intent.getStringExtra("medName");
-            String[] time = intent.getStringArrayExtra("times");
-            MedicineCard med1 = new MedicineCard(name, time[0]);
-            upcomingMeds.add(med1);
-        }
-
-        MedicineCard tylenol = new MedicineCard("Tylenol", "12 pm");
-        MedicineCard advil = new MedicineCard("Advil", "1 pm");
-        MedicineCard Vyvanse = new MedicineCard("Vyvanse", "2 pm");
-
-        pastMeds.add(tylenol);
-        upcomingMeds.add(Vyvanse);
-        upcomingMeds.add(advil);
-
-        /* ------------------------------------------------------------------------ */
-        OnSwipeTouchListener listener;
-        View currView;
-        if (onPast) {
-            this.displayPastCards();
-        } else {
-            this.displayUpcomingCards();
-        }
-
-        /* display past medications array */
-        final Button pastButton = findViewById(R.id.past);
-        pastButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onPast = true;
-                TextView pastText = findViewById(R.id.past);
-                TextView upcomingText = findViewById(R.id.upcoming);
-                pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                upcomingText.setPaintFlags(0);
-                displayPastCards();
-            }
-        });
-
-        /* display upcoming medications array */
-        Button upcomingButton = findViewById(R.id.upcoming);
-        upcomingButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onPast = false;
-                TextView upcomingText = findViewById(R.id.upcoming);
-                TextView pastText = findViewById(R.id.past);
-                pastText.setPaintFlags(0);
-                upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                displayUpcomingCards();
-            }
-        });
-
-        currView = (ListView) findViewById(R.id.list_view);
-        currView.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeBottom() {
-            }
-
-            @Override
-            public void onSwipeLeft() {
-                onPast = false;
-                TextView upcomingText = findViewById(R.id.upcoming);
-                TextView pastText = findViewById(R.id.past);
-                pastText.setPaintFlags(0);
-                upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                displayUpcomingCards();
-            }
-
-            @Override
-            public void onSwipeTop() {
-            }
-
-            @Override
-            public void onSwipeRight() {
-                onPast = true;
-                TextView pastText = findViewById(R.id.past);
-                TextView upcomingText = findViewById(R.id.upcoming);
-                pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-                upcomingText.setPaintFlags(0);
-                displayPastCards();
-
-            }
-
-
-        });
-
-
-
-    }
-
-    /* Custom-built adapters to display list views of past/upcoming medicine cards */
-    private void displayPastCards() {
-        final MedCardAdapter adapter = new MedCardAdapter(this, pastMeds, true);
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
-    }
-
-    private  void displayUpcomingCards() {
-        final MedCardAdapter adapter = new MedCardAdapter(this, upcomingMeds, false);
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
     }
 
     @Override
@@ -186,12 +78,13 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_add) {
             Intent intent = new Intent(MainActivity.this, AddMedication.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            //startActivityForResult(intent, REQUEST_CODE);
+            startActivity(intent);
             return true;
         }
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
+        /*
+        if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
             return true;
@@ -200,58 +93,42 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         currentTime = Calendar.getInstance().getTime();
         Calendar test;
-        Calendar bestTime = Calendar.getInstance();
+
         // This will find the time closest to the current time and put it in the Upcoming Medication array
         if (resultCode == Activity.RESULT_OK) {
-            orderMedications(data.getStringExtra("medication_name"), data.getStringArrayExtra("all_times"));
-
-        }
-
-    }
-
-    public void orderMedications(String medName, String[] data) {
-        currentTime = Calendar.getInstance().getTime();
-        Calendar test;
-        Calendar bestTime = Calendar.getInstance();
-        String soonestTime = "";
-        for (String time : data) {
-            String[] hourAndTime = time.split("\\s+");
-            int amOrPm;
-            if (hourAndTime[1].equals("am")) {
-                amOrPm = 0;
-            } else {
-                amOrPm = 1;
-            }
-            test = Calendar.getInstance();
-            test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
-            test.set(Calendar.AM_PM, amOrPm);
-
-            if (currentTime.before(test.getTime())){
-                if (soonestTime.length() > 0) {
-
-                    if (test.before(bestTime)) {
-                        soonestTime = time;
-                        bestTime = test;
-                    }
+            String medName = data.getStringExtra("medication_name");
+            String soonestTime = "";
+            for (String time : data.getStringArrayExtra("all_times")) {
+                String[] hourAndTime = time.split("\\s+");
+                int amOrPm;
+                if (hourAndTime[1].equals("am")) {
+                    amOrPm = 0;
                 } else {
+                    amOrPm = 1;
+                }
+                test = Calendar.getInstance();
+                test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
+                test.set(Calendar.AM_PM, amOrPm);
+
+                if (currentTime.before(test.getTime())){
                     soonestTime = time;
-                    bestTime = test;
+                    break;
                 }
             }
-        }
-        if (soonestTime.length() > 0) {
-            MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
-            upcomingMeds.add(newlyAddedMedication);
-            displayUpcomingCards();
+            if (soonestTime.length() > 0) {
+                MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
+                upcomingMeds.add(newlyAddedMedication);
+
+            }
+
         }
 
-    }
-*/
+    }*/
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -259,23 +136,40 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cabinet) {
-            Intent intent = new Intent(this, CabinetActivity.class);
-            startActivity(intent);
-            return true;
+            transaction = getSupportFragmentManager().beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, cabinetFrag);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
         } else if (id == R.id.nav_find) {
 
         } else if (id == R.id.nav_schedule) {
+            transaction = getSupportFragmentManager().beginTransaction();
 
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, scheduleFrag);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
         } else if (id == R.id.nav_map) {
 
-        } else if (id == R.id.nav_settings) {
+        } else  if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

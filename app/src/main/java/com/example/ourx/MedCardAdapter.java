@@ -2,6 +2,7 @@ package com.example.ourx;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ourx.OnSwipeTouchListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/* Source: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView */
+/* Template from: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView */
 public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
 
     private String timeString;
@@ -49,11 +49,11 @@ public class MedCardAdapter extends ArrayAdapter<MedicineCard> {
         String finalString = timeString + medicineCard.getTimeToTake();
         medTime.setText(finalString);
 
-        /* TODO if time to take after current time outline red */
         Date rightNow = Calendar.getInstance().getTime();
         Date medicationTime = parseTime(medicineCard.getTimeToTake());
 
-        /* In past mode, aka need to check the hour */
+        /* In upcoming mode, aka need to check the hour */
+        /* TODO: For some reason this doesn't show up red when the hour is the same (i.e. its 10:30 and you were supposed to take meds at 10*/
         if (needToCheckHour && !medicineCard.isTaken()) {
             if (medicationTime.before(rightNow)) {
                 medName.setTextColor(Color.parseColor("#f44253"));
