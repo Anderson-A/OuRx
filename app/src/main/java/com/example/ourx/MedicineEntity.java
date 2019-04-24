@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/ */
+/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
+ * Step 4: Create the entity */
 @Entity
 public class MedicineEntity {
 
@@ -94,5 +95,81 @@ public class MedicineEntity {
         this.MED_SAT = MED_SAT;
         this.MED_INSTRUCT = MED_INSTRUCT;
         this.MED_TAKEN = MED_TAKEN;
+    }
+
+    public String getMED_NAME() {
+        return MED_NAME;
+    }
+
+    public String getMED_DOSAGE() {
+        return MED_DOSAGE;
+    }
+
+    public String getMED_UNIT() {
+        return MED_UNIT;
+    }
+
+    public String getMED_FOOD() {
+        return MED_FOOD;
+    }
+
+    public String getMED_WATER() {
+        return MED_WATER;
+    }
+
+    public String getMED_TIME_ONE() {
+        return MED_TIME_ONE;
+    }
+
+    public String getMED_TIME_TWO() {
+        return MED_TIME_TWO;
+    }
+
+    public String getMED_TIME_THREE() {
+        return MED_TIME_THREE;
+    }
+
+    public String getMED_TIME_FOUR() {
+        return MED_TIME_FOUR;
+    }
+
+    public String getMED_TIME_FIVE() {
+        return MED_TIME_FIVE;
+    }
+
+    public String getMED_SUN() {
+        return MED_SUN;
+    }
+
+    public String getMED_MON() {
+        return MED_MON;
+    }
+
+    public String getMED_TUES() {
+        return MED_TUES;
+    }
+
+    public String getMED_WED() {
+        return MED_WED;
+    }
+
+    public String getMED_THURS() {
+        return MED_THURS;
+    }
+
+    public String getMED_FRI() {
+        return MED_FRI;
+    }
+
+    public String getMED_SAT() {
+        return MED_SAT;
+    }
+
+    public String getMED_INSTRUCT() {
+        return MED_INSTRUCT;
+    }
+
+    public String getMED_TAKEN() {
+        return MED_TAKEN;
     }
 }

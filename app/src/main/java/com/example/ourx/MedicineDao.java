@@ -8,11 +8,13 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/ */
+/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
+ * Step 5: Create the DAO */
 @Dao
 public interface MedicineDao {
     @Query("SELECT * FROM medicineentity")
     LiveData<List<MedicineEntity>> getAll();
+    // Wrapped with LiveData so we can observe when the data changes and update things accordingly
 
     @Insert
     void insert(MedicineEntity medicineEntity);

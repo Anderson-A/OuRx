@@ -19,12 +19,15 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    //static final int REQUEST_CODE = 1;
+    /* old code from before using database, TODO: delete these variables
+    static final int REQUEST_CODE = 1;
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
     Date currentTime;
+    */
+    // For doing operations with fragments
     private FragmentTransaction transaction;
-    private Fragment cabinetFrag;
-    private Fragment scheduleFrag;
+    private Fragment cabinetFrag; // Fragment for displaying the medicine cabinet
+    private Fragment scheduleFrag; // Fragment for displaying the schedule
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +42,19 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // initialize fragments
         cabinetFrag = new CabinetFragment();
         scheduleFrag = new ScheduleFragment();
 
+        // start off in the medication schedule fragment
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, scheduleFrag).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        currentTime = Calendar.getInstance().getTime();
+        /* code from before using database TODO: delete line
+        currentTime = Calendar.getInstance().getTime(); */
 
     }
 
@@ -83,16 +89,10 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
-        /*
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
+    // Old code for when we had the data passed back using intents before database TODO: delete
     /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         currentTime = Calendar.getInstance().getTime();

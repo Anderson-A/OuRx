@@ -6,7 +6,8 @@ import java.util.List;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/ */
+/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
+ * Step 9: Create the ViewModel */
 public class MedicineViewModel extends AndroidViewModel {
     private LiveData<List<MedicineEntity>> allMedications;
     private MedicineDao medicineDao;

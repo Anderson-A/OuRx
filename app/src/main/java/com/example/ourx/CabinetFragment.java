@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class CabinetFragment extends ListFragment {
 
-    private ArrayList<CabinetCard> medications = new ArrayList<>();
+    private ArrayList<MedicineEntity> medications = new ArrayList<>();
 
     public CabinetFragment() {
         // Required empty public constructor
@@ -54,8 +54,9 @@ public class CabinetFragment extends ListFragment {
         medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
             @Override
             public void onChanged(@Nullable final List<MedicineEntity> meds) {
-                medications = entityToCabCard(meds);
-                final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), medications);
+                /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete line
+                medications = entityToCabCard(meds); */
+                final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), meds);
                 setListAdapter(adapter);
             }
         });
@@ -63,7 +64,8 @@ public class CabinetFragment extends ListFragment {
 
     }
 
-    /* Turns medicine entities into cabinet cards to display in schedule */
+    /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete method
+    Turns medicine entities into cabinet cards to display in schedule
     private ArrayList<CabinetCard> entityToCabCard(List<MedicineEntity> meds) {
         ArrayList<CabinetCard> cabinetCards = new ArrayList<>();
         for (MedicineEntity med : meds) {
@@ -74,7 +76,7 @@ public class CabinetFragment extends ListFragment {
                     med.MED_INSTRUCT));
         }
         return cabinetCards;
-    }
+    }*/
 
     // Called at the start of the active lifetime.
     @Override
@@ -83,7 +85,7 @@ public class CabinetFragment extends ListFragment {
         Log.d ("Cabinet Fragment", "onResume");
         // Resume any paused UI updates, threads, or processes required
         // by the Fragment but suspended when it became inactive.
- //       ((MainActivity) getActivity()).setActionBarTitle("Medicine Cabinet");
+        ((MainActivity) getActivity()).setActionBarTitle("Medicine Cabinet");
     }
 
     // Called at the end of the active lifetime.

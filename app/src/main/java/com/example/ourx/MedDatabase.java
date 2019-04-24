@@ -10,7 +10,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/ */
+/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
+ * Step 7: Add a Room database */
 @Database(entities = {MedicineEntity.class}, version = 2)
 public abstract class MedDatabase extends RoomDatabase {
     public abstract MedicineDao medicineDao();

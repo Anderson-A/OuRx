@@ -207,7 +207,7 @@ public class ScheduleFragment extends Fragment {
         // Resume any paused UI updates, threads, or processes required
         // by the Fragment but suspended when it became inactive.
 
-  //      ((MainActivity) getActivity()).setActionBarTitle("Schedule");
+        ((MainActivity) getActivity()).setActionBarTitle("Schedule");
     }
 
     // Called at the end of the active lifetime.
