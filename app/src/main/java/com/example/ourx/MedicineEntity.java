@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class MedicineEntity {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int mid;
 
     @ColumnInfo(name = "med_name")
