@@ -9,9 +9,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +34,11 @@ public class CabinetFragment extends ListFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +72,36 @@ public class CabinetFragment extends ListFragment {
             }
         });
 
+        // Get the ListView the Cabinet_fragment is using and register it to have a context menu
+        ListView listView = getListView();
+        registerForContextMenu(listView);
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.cabinet_menu, menu);
+        menu.setHeaderTitle("Select Action");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete) {
+            // Get the medication we want to delete
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int index = info.position;
+            MedicineEntity card = (MedicineEntity) getListAdapter().getItem(index);
+            Toast.makeText(getActivity().getApplicationContext(),"Deleting " + card.MED_NAME,Toast.LENGTH_LONG).show();
+
+            // Delete the medication
+            ViewModelProviders.of(this).get(MedicineViewModel.class).delete(card);
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete method
