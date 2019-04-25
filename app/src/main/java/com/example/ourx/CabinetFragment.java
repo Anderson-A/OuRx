@@ -19,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import java.util.List;
 public class CabinetFragment extends ListFragment {
 
     private ArrayList<MedicineEntity> medications = new ArrayList<>();
+    MedicineEntity cardToDelete;
 
     public CabinetFragment() {
         // Required empty public constructor
@@ -92,16 +95,30 @@ public class CabinetFragment extends ListFragment {
             // Get the medication we want to delete
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
-            MedicineEntity card = (MedicineEntity) getListAdapter().getItem(index);
-            Toast.makeText(getActivity().getApplicationContext(),"Deleting " + card.MED_NAME,Toast.LENGTH_LONG).show();
+            cardToDelete = (MedicineEntity) getListAdapter().getItem(index);
+            Snackbar deleteSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToDelete.MED_NAME + " deleted", Snackbar.LENGTH_LONG);
+            deleteSnack.setAction("Undo", new undoListener());
+            deleteSnack.show();
 
             // Delete the medication
-            ViewModelProviders.of(this).get(MedicineViewModel.class).delete(card);
+            ViewModelProviders.of(this).get(MedicineViewModel.class).delete(cardToDelete);
         } else {
             return false;
         }
 
         return true;
+    }
+
+    public class undoListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            undoDeletion();
+        }
+    }
+
+    public void undoDeletion() {
+        ViewModelProviders.of(this).get(MedicineViewModel.class).insert(cardToDelete);
     }
 
     /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete method
