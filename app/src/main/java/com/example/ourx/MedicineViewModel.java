@@ -6,7 +6,8 @@ import java.util.List;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/ */
+/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
+ * Step 9: Create the ViewModel */
 public class MedicineViewModel extends AndroidViewModel {
     private LiveData<List<MedicineEntity>> allMedications;
     private MedicineDao medicineDao;
@@ -39,6 +40,23 @@ public class MedicineViewModel extends AndroidViewModel {
         @Override
         protected Void doInBackground(final MedicineEntity... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    void delete(MedicineEntity medicineEntity) {
+        new deleteAsyncTask(medicineDao).execute(medicineEntity);
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<MedicineEntity, Void, Void> {
+
+        private MedicineDao mAsyncTaskDao;
+
+        deleteAsyncTask(MedicineDao dao) { mAsyncTaskDao = dao; }
+
+        @Override
+        protected Void doInBackground(final MedicineEntity... params) {
+            mAsyncTaskDao.delete(params[0]);
             return null;
         }
     }

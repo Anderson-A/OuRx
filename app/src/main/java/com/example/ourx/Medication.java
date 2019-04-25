@@ -1,5 +1,6 @@
 package com.example.ourx;
 
+/* No longer used due to Room database, using MedicineEntity instead. TODO: delete this file */
 public class Medication {
 
     private String name;

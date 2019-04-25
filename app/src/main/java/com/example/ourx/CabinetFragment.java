@@ -9,9 +9,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +30,18 @@ import java.util.List;
  */
 public class CabinetFragment extends ListFragment {
 
-    private ArrayList<CabinetCard> medications = new ArrayList<>();
+    private ArrayList<MedicineEntity> medications = new ArrayList<>();
+    MedicineEntity cardToDelete;
 
     public CabinetFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,16 +68,61 @@ public class CabinetFragment extends ListFragment {
         medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
             @Override
             public void onChanged(@Nullable final List<MedicineEntity> meds) {
-                medications = entityToCabCard(meds);
-                final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), medications);
+                /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete line
+                medications = entityToCabCard(meds); */
+                final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), meds);
                 setListAdapter(adapter);
             }
         });
 
-
+        // Get the ListView the Cabinet_fragment is using and register it to have a context menu
+        ListView listView = getListView();
+        registerForContextMenu(listView);
     }
 
-    /* Turns medicine entities into cabinet cards to display in schedule */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.cabinet_menu, menu);
+        menu.setHeaderTitle("Select Action");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete) {
+            // Get the medication we want to delete
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int index = info.position;
+            cardToDelete = (MedicineEntity) getListAdapter().getItem(index);
+            Snackbar deleteSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToDelete.MED_NAME + " deleted", Snackbar.LENGTH_LONG);
+            deleteSnack.setAction("Undo", new undoListener());
+            deleteSnack.show();
+
+            // Delete the medication
+            ViewModelProviders.of(this).get(MedicineViewModel.class).delete(cardToDelete);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    public class undoListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            undoDeletion();
+        }
+    }
+
+    public void undoDeletion() {
+        ViewModelProviders.of(this).get(MedicineViewModel.class).insert(cardToDelete);
+    }
+
+    /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete method
+    Turns medicine entities into cabinet cards to display in schedule
     private ArrayList<CabinetCard> entityToCabCard(List<MedicineEntity> meds) {
         ArrayList<CabinetCard> cabinetCards = new ArrayList<>();
         for (MedicineEntity med : meds) {
@@ -74,7 +133,7 @@ public class CabinetFragment extends ListFragment {
                     med.MED_INSTRUCT));
         }
         return cabinetCards;
-    }
+    }*/
 
     // Called at the start of the active lifetime.
     @Override
@@ -83,7 +142,7 @@ public class CabinetFragment extends ListFragment {
         Log.d ("Cabinet Fragment", "onResume");
         // Resume any paused UI updates, threads, or processes required
         // by the Fragment but suspended when it became inactive.
- //       ((MainActivity) getActivity()).setActionBarTitle("Medicine Cabinet");
+        ((MainActivity) getActivity()).setActionBarTitle("Medicine Cabinet");
     }
 
     // Called at the end of the active lifetime.

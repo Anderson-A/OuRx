@@ -1,5 +1,6 @@
 package com.example.ourx;
 
+/* CabinetCardAdapter uses MedicineEntity directly, this class no longer used TODO:delete this file */
 public class CabinetCard {
 
     private String name;
