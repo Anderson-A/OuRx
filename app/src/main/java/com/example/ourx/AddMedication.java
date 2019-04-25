@@ -178,7 +178,7 @@ public class AddMedication extends AppCompatActivity {
         }
 
         /* Creates a new medication entry based on entered data */
-        MedicineEntity medicineEntity = new MedicineEntity(currentMedId, medication_name.getText().toString(),
+        MedicineEntity medicineEntity = new MedicineEntity(0, medication_name.getText().toString(),
                 dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
                 takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
                 medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,

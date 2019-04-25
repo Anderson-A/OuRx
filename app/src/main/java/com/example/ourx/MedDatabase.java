@@ -10,9 +10,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
- * Step 7: Add a Room database */
-@Database(entities = {MedicineEntity.class}, version = 2)
+/* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/ */
+@Database(entities = {MedicineEntity.class}, version = 3)
 public abstract class MedDatabase extends RoomDatabase {
     public abstract MedicineDao medicineDao();
 
@@ -26,6 +25,7 @@ public abstract class MedDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             MedDatabase.class, "med_database")
                             .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
@@ -55,13 +55,6 @@ public abstract class MedDatabase extends RoomDatabase {
         /* TODO: Hardcoded default value. Need to incorporate persistence */
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.deleteAll();
-            MedicineEntity medicineEntity = new MedicineEntity(1,"OxyCodone", "1", "pill",
-                    null, null, "11 pm", null, null, null,
-                    null, "yes", null, null, null, null, null,
-                    null, null, "true");
-            Log.d("insert", "inserting " + medicineEntity.MED_NAME);
-            mDao.insert(medicineEntity);
             return null;
         }
     }
