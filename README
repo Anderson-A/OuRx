@@ -25,6 +25,13 @@ Features:
     
 Second Sprint
 Jake broke the build. What a dumb guy.
+GOALS:
+1) Change the schedule and cabinet from activities to fragmenmts
+2) Integrate a working database
+3) Create activity for Medication Information that also lets the user edit the information
+4) Implement deletes and location changes in schedule on card long press
+5) (Optional) Notifications shown on screen when it's time to take medication
+6) (Essential) Don't let Jake break the build again... :(
 
 
 
