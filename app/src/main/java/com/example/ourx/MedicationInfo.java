@@ -32,6 +32,7 @@ public class MedicationInfo extends AppCompatActivity {
     ArrayList<String> allTimes;
     ArrayAdapter<String> adapter;
     TextView medication_name, unit_text;
+    MedicineEntity dataMedicine;
 
 
     static final int REQUEST_CODE = 1;
@@ -86,7 +87,7 @@ public class MedicationInfo extends AppCompatActivity {
         String queryName = extras.getString("name");
 
         final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
-        MedicineEntity dataMedicine = medicineViewModel.getMedicineByName(queryName);
+        dataMedicine = medicineViewModel.getMedicineByName(queryName);
 
         //Setting the values based on database
         // Log.d("list of meds", dataMedicine.MED_FOOD);
@@ -213,6 +214,9 @@ public class MedicationInfo extends AppCompatActivity {
     }
 
     public boolean onAddMedication(View v) {
+
+        ViewModelProviders.of(this).get(MedicineViewModel.class).delete(dataMedicine);
+
         final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
         boolean requiredFieldsFilledIn = true;
