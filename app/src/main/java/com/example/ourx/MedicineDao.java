@@ -17,7 +17,7 @@ public interface MedicineDao {
     // Wrapped with LiveData so we can observe when the data changes and update things accordingly
 
     @Query("SELECT * FROM medicineentity WHERE med_name = :name")
-    List<MedicineEntity> getMedByName(String name);
+    MedicineEntity getMedByName(String name);
 
     @Insert
     void insert(MedicineEntity medicineEntity);
