@@ -23,7 +23,7 @@ public class MedicineViewModel extends AndroidViewModel {
         allMedications = medicineDao.getAll();
     }
 
-    List<MedicineEntity> getMedicineByName(String name) {
+    MedicineEntity getMedicineByName(String name) {
         return medicineDao.getMedByName(name);
     }
 

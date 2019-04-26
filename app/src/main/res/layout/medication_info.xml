@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/dosage_text"
@@ -13,24 +13,23 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="@font/roboto"
         android:text="@string/add_dosage"
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/take_with_food_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875"
+        app:layout_constraintVertical_bias="0.231"
         tools:text="@string/add_dosage" />
 
     <TextView
         android:id="@+id/frequency_text"
-        android:layout_width="99dp"
-        android:layout_height="32dp"
+        android:layout_width="86dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -77,12 +76,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:clickable="false"
         android:fontFamily="@font/roboto"
         android:text="@string/add_special_instructions"
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:clickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -97,19 +96,17 @@
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="@font/roboto"
         android:text="@string/add_food"
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/frequency_text"
-        app:layout_constraintEnd_toStartOf="@+id/take_with_food_water"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.903"
+        app:layout_constraintVertical_bias="0.328"
         tools:text="@string/add_food" />
 
     <TextView
@@ -127,10 +124,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintHorizontal_bias="0.793"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.328"
+        app:layout_constraintVertical_bias="0.331"
         tools:text="@string/add_water" />
 
 
@@ -141,9 +138,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="   S"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_mon" />
 
@@ -154,9 +151,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="   M"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_tues" />
 
@@ -167,9 +164,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="   T"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_wed" />
 
@@ -180,9 +177,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="   W"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_thurs" />
 
@@ -193,9 +190,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="  Th"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_fri" />
 
@@ -206,9 +203,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="   F"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_sat" />
 
@@ -219,9 +216,9 @@
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="204dp"
         android:button="@null"
+        android:clickable='false'
         android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
         android:text="   S"
-        android:clickable='false'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -229,17 +226,19 @@
         android:id="@+id/special_instructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="124dp"
         android:ems="10"
+        android:focusable="false"
         android:fontFamily="@font/roboto"
         android:hint="@string/add_enter_instructions"
         android:inputType="text"
-        android:textSize="14sp"
-        android:focusable="false"
         android:longClickable="false"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/special_instructions_text" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.769"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.784" />
 
     <EditText
         android:id="@+id/dosage"
@@ -247,7 +246,6 @@
         android:layout_height="37dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="440dp"
         android:ems="10"
         android:focusable="false"
         android:fontFamily="@font/roboto"
@@ -257,89 +255,95 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.335"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.242" />
 
     <CheckBox
         android:id="@+id/take_with_water"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="188dp"
         android:layout_marginEnd="4dp"
         android:clickable='false'
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintHorizontal_bias="0.908"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33" />
 
     <CheckBox
         android:id="@+id/take_with_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="188dp"
         android:layout_marginEnd="4dp"
         android:clickable='false'
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.366"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.332" />
 
     <Spinner
         android:id="@+id/dosage_unit"
         android:layout_width="93dp"
         android:layout_height="36dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="132dp"
         android:layout_marginEnd="4dp"
         android:entries="@array/unit_options"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
-        app:layout_constraintStart_toEndOf="@+id/dosage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.662"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.234" />
 
 
     <Spinner
         android:id="@+id/frequency_hour"
         android:layout_width="112dp"
         android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="240dp"
         android:layout_marginEnd="4dp"
         android:entries="@array/hours"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/frequency_text"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.389"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
 
     <Button
         android:id="@+id/add_time"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginBottom="352dp"
         android:background="@mipmap/yellow_add"
         android:onClick="addTimes"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.586"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.405" />
 
     <Button
         android:id="@+id/undo_time"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="320dp"
         android:background="@mipmap/trash"
         android:onClick="removeTimes"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.586"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_time" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.469" />
 
     <ListView
         android:id="@+id/times"
@@ -353,10 +357,10 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintHorizontal_bias="0.828"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.481"/>
+        app:layout_constraintVertical_bias="0.451" />
 
     <Button
         android:id="@+id/add_medication"
@@ -367,8 +371,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorPrimary"
-        android:text="Add Changes"
         android:onClick="onAddMedication"
+        android:text="Add Changes"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -395,6 +399,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.072" />
+
+    <TextView
+        android:id="@+id/unit_text"
+        android:layout_width="86dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/roboto"
+        android:text="Unit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.669"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.238" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

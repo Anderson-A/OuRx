@@ -117,9 +117,7 @@ public class MedicineEntity {
         return MED_WATER;
     }
 
-    public String getMED_TIME_ONE() {
-        return MED_TIME_ONE;
-    }
+    public String getMED_TIME_ONE() { return MED_TIME_ONE; }
 
     public String getMED_TIME_TWO() {
         return MED_TIME_TWO;

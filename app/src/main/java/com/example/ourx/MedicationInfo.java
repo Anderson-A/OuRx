@@ -31,7 +31,7 @@ public class MedicationInfo extends AppCompatActivity {
     ListView times;
     ArrayList<String> allTimes;
     ArrayAdapter<String> adapter;
-    TextView medication_name;
+    TextView medication_name, unit_text;
 
 
     static final int REQUEST_CODE = 1;
@@ -40,11 +40,7 @@ public class MedicationInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.medication_info);
-        Bundle extras = getIntent().getExtras();
-        String queryName = extras.getString("name");
 
-        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
-        ArrayList<MedicineEntity> medicineList = (ArrayList) medicineViewModel.getMedicineByName(queryName);
      //   Log.d("list of meds", medicineList.get(0).getMED_NAME());
      //   Log.d("list of meds", "HELLO LOOK AT ME");
 
@@ -66,6 +62,7 @@ public class MedicationInfo extends AppCompatActivity {
         //Initialize Text Boxes
         dosage = findViewById(R.id.dosage);
         special_instructions = findViewById(R.id.special_instructions);
+        unit_text = findViewById(R.id.unit_text);
 
         //Initialize Spinners
         unit = findViewById(R.id.dosage_unit);
@@ -85,6 +82,37 @@ public class MedicationInfo extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, R.layout.all_times_list, allTimes);
         times.setAdapter(adapter);
 
+        Bundle extras = getIntent().getExtras();
+        String queryName = extras.getString("name");
+
+        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+        MedicineEntity dataMedicine = medicineViewModel.getMedicineByName(queryName);
+
+        //Setting the values based on database
+        // Log.d("list of meds", dataMedicine.MED_FOOD);
+        if (dataMedicine.getMED_NAME() != null) { medication_name.setText(dataMedicine.getMED_NAME()); }
+        if (dataMedicine.getMED_DOSAGE() != null) { dosage.setText(dataMedicine.getMED_DOSAGE()); }
+        if (dataMedicine.getMED_FOOD() != null) { take_with_food.setChecked(true); }
+        if (dataMedicine.getMED_WATER() != null) { take_with_water.setChecked(true); }
+
+        if (dataMedicine.getMED_UNIT() != null) { unit_text.setText(dataMedicine.getMED_UNIT()); }
+
+        if (dataMedicine.getMED_TIME_ONE() != null) { allTimes.add(dataMedicine.getMED_TIME_ONE()); }
+        if (dataMedicine.getMED_TIME_TWO() != null) { allTimes.add(dataMedicine.getMED_TIME_TWO()); }
+        if (dataMedicine.getMED_TIME_THREE() != null) { allTimes.add(dataMedicine.getMED_TIME_THREE()); }
+        if (dataMedicine.getMED_TIME_FOUR() != null) { allTimes.add(dataMedicine.getMED_TIME_FOUR()); }
+        if (dataMedicine.getMED_TIME_FIVE() != null) { allTimes.add(dataMedicine.getMED_TIME_FIVE()); }
+
+        if (dataMedicine.getMED_SUN() != null) { sun.setChecked(true); }
+        if (dataMedicine.getMED_MON() != null) { mon.setChecked(true); }
+        if (dataMedicine.getMED_TUES() != null) { tues.setChecked(true); }
+        if (dataMedicine.getMED_WED() != null) { wed.setChecked(true); }
+        if (dataMedicine.getMED_THURS() != null) { thurs.setChecked(true); }
+        if (dataMedicine.getMED_FRI() != null) { fri.setChecked(true); }
+        if (dataMedicine.getMED_SAT() != null) { sat.setChecked(true); }
+
+        if (dataMedicine.getMED_INSTRUCT() != null) { special_instructions.setText(dataMedicine.getMED_INSTRUCT()); }
+
     }
 
     @Override
@@ -98,7 +126,6 @@ public class MedicationInfo extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_edit:
-                Log.d("HERE", "HERE1");
                 unlockLayout();
         }
         return true;
@@ -128,6 +155,8 @@ public class MedicationInfo extends AppCompatActivity {
         unit.setVisibility(View.VISIBLE);
         frequency.setVisibility(View.VISIBLE);
         add_medication.setVisibility(View.VISIBLE);
+
+        unit_text.setVisibility(View.INVISIBLE);
     }
 
     public void lockLayout() {
@@ -156,6 +185,9 @@ public class MedicationInfo extends AppCompatActivity {
         unit.setVisibility(View.INVISIBLE);
         frequency.setVisibility(View.INVISIBLE);
         add_medication.setVisibility(View.INVISIBLE);
+
+        unit_text.setText(unit.getSelectedItem().toString());
+        unit_text.setVisibility(View.VISIBLE);
     }
 
     public void addTimes(View v) {
