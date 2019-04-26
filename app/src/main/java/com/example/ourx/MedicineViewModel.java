@@ -2,21 +2,29 @@ package com.example.ourx;
 
 import android.app.Application;
 import android.os.AsyncTask;
+
+import java.util.ArrayList;
 import java.util.List;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
 
 /* templated from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/
  * Step 9: Create the ViewModel */
 public class MedicineViewModel extends AndroidViewModel {
     private LiveData<List<MedicineEntity>> allMedications;
     private MedicineDao medicineDao;
+    private MedDatabase db;
 
     public MedicineViewModel(Application application) {
         super(application);
-        MedDatabase db = MedDatabase.getDatabase(application);
+        db = MedDatabase.getDatabase(application);
         medicineDao = db.medicineDao();
         allMedications = medicineDao.getAll();
+    }
+
+    List<MedicineEntity> getMedicineByName(String name) {
+        return medicineDao.getMedByName(name);
     }
 
     /* Returns all medications in the database. Used to track any changes */
@@ -60,4 +68,5 @@ public class MedicineViewModel extends AndroidViewModel {
             return null;
         }
     }
+
 }

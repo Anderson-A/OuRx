@@ -26,6 +26,7 @@ public abstract class MedDatabase extends RoomDatabase {
                             MedDatabase.class, "med_database")
                             .addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

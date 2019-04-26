@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -32,13 +33,20 @@ public class MedicationInfo extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     TextView medication_name;
 
-    private static int currentMedId = 2;
 
     static final int REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.medication_info);
+        Bundle extras = getIntent().getExtras();
+        String queryName = extras.getString("name");
+
+        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+        ArrayList<MedicineEntity> medicineList = (ArrayList) medicineViewModel.getMedicineByName(queryName);
+     //   Log.d("list of meds", medicineList.get(0).getMED_NAME());
+     //   Log.d("list of meds", "HELLO LOOK AT ME");
 
 
         //Initialize Medication Name
@@ -244,7 +252,7 @@ public class MedicationInfo extends AppCompatActivity {
         }
 
         /* Creates a new medication entry based on entered data */
-        MedicineEntity medicineEntity = new MedicineEntity(currentMedId, medication_name.getText().toString(),
+        MedicineEntity medicineEntity = new MedicineEntity(0, medication_name.getText().toString(),
                 dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
                 takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
                 medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,
@@ -252,7 +260,6 @@ public class MedicationInfo extends AppCompatActivity {
 
         /* Inserts the entity into the database */
         medicineViewModel.insert(medicineEntity);
-        currentMedId++; // tracks the current medID. Hardcoded to start at 2 because initial population is 1. Need to fix.
 
         lockLayout();
         return true;
