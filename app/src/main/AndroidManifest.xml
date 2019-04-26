@@ -36,6 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MedicationInfo"
+            android:label="@string/med_info"
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
     </application>
 

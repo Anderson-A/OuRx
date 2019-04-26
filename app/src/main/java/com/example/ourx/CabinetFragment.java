@@ -1,6 +1,7 @@
 package com.example.ourx;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,9 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +80,17 @@ public class CabinetFragment extends ListFragment {
         });
 
         // Get the ListView the Cabinet_fragment is using and register it to have a context menu
-        ListView listView = getListView();
+        final ListView listView = getListView();
         registerForContextMenu(listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent infoIntent = new Intent(getActivity(), MedicationInfo.class);
+                TextView cabName = v.findViewById(R.id.cabinet_name);
+                infoIntent.putExtra("name", cabName.getText().toString());
+                startActivity(infoIntent);
+            }
+        });
     }
 
     @Override
