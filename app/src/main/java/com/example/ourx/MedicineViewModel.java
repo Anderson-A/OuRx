@@ -32,6 +32,12 @@ public class MedicineViewModel extends AndroidViewModel {
         return allMedications;
     }
 
+    MedicineDao getMedicineDao() {
+        return medicineDao;
+    }
+
+
+
     /* Must insert using a new thread (not one the UI is using) to avoid crashing the app */
     void insert(MedicineEntity medicineEntity) {
         new insertAsyncTask(medicineDao).execute(medicineEntity);

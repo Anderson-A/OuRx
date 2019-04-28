@@ -170,4 +170,8 @@ public class MedicineEntity {
     public String getMED_TAKEN() {
         return MED_TAKEN;
     }
+
+    public void setMED_TAKEN(String t) {
+        MED_TAKEN = t;
+    }
 }
