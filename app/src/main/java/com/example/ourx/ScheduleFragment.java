@@ -160,27 +160,36 @@ public class ScheduleFragment extends Fragment {
     private ArrayList<MedicineCard> entityToMedCard(List<MedicineEntity> meds) {
         ArrayList<MedicineCard> medCards = new ArrayList<>();
         for (MedicineEntity med : meds) {
-            boolean taken = false;
-            if (med.MED_TAKEN.equals("true")) {
-                taken = true;
-            }
+            Calendar time = Calendar.getInstance();
+            if (time.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && med.MED_SUN != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY && med.MED_MON != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY && med.MED_TUES != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY && med.MED_WED != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY && med.MED_THURS != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && med.MED_FRI != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY && med.MED_SAT != null) {
+                boolean taken = false;
+                if (med.MED_TAKEN.equals("true")) {
+                    taken = true;
+                }
 
-            /* TODO: find solution to distinguish what time something has been taken
-             * Idea 1: have 5 columns (taken 1, taken 2, etc)
-             * Idea 2: original idea of a new entry for each time. Updating problem. */
-            medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_ONE, taken));
-            /* Displays each new time instance as a new card */
-            if (med.MED_TIME_TWO != null) {
-                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_TWO, taken));
-            }
-            if (med.MED_TIME_THREE != null) {
-                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_THREE, taken));
-            }
-            if (med.MED_TIME_FOUR != null) {
-                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FOUR, taken));
-            }
-            if (med.MED_TIME_FIVE != null) {
-                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FIVE, taken));
+                /* TODO: find solution to distinguish what time something has been taken
+                 * Idea 1: have 5 columns (taken 1, taken 2, etc)
+                 * Idea 2: original idea of a new entry for each time. Updating problem. */
+                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_ONE, taken));
+                /* Displays each new time instance as a new card */
+                if (med.MED_TIME_TWO != null) {
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_TWO, taken));
+                }
+                if (med.MED_TIME_THREE != null) {
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_THREE, taken));
+                }
+                if (med.MED_TIME_FOUR != null) {
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FOUR, taken));
+                }
+                if (med.MED_TIME_FIVE != null) {
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FIVE, taken));
+                }
             }
         }
         return medCards;

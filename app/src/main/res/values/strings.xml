@@ -28,6 +28,7 @@
     <string name="add_medication">Add Medication</string>
     <string name="past_button">Past</string>
     <string name="upcoming_button">Upcoming</string>
+    <string name="med_info">Medication Info</string>
 
     <string-array name="unit_options">
         <item>Pill</item>
