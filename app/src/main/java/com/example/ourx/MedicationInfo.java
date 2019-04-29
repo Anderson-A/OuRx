@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.lifecycle.ViewModelProviders;
 
 public class MedicationInfo extends AppCompatActivity {
@@ -128,8 +129,13 @@ public class MedicationInfo extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_edit:
                 unlockLayout();
+                return true;
+
+            /* https://stackoverflow.com/questions/28438030/how-to-make-back-icon-to-behave-same-as-physical-back-button-in-android */
+            default:
+                onBackPressed();
+                return true;
         }
-        return true;
     }
 
     public void unlockLayout() {
