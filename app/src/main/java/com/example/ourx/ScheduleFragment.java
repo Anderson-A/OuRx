@@ -120,6 +120,7 @@ public class ScheduleFragment extends Fragment {
         */
 
         // Get the ListView the Cabinet_fragment is using and register it to have a context menu
+        //if() {
         final ListView listView = (ListView) getView().findViewById(R.id.list_view);
         registerForContextMenu(listView);
 
@@ -173,7 +174,7 @@ public class ScheduleFragment extends Fragment {
 
 
             //update the dao
-            medicineViewModel.getMedicineDao().update();
+            medicineViewModel.update(cardToMigrate );
 
 
             Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
@@ -204,8 +205,8 @@ public class ScheduleFragment extends Fragment {
         Date rightNow = Calendar.getInstance().getTime();
         for (MedicineCard medicineCard : medicineCards) {
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
-            //if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
-            if(medicineCard.isTaken()) {    //TODO: switch back?
+            if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
+            //if(medicineCard.isTaken()) {    //TODO: switch back?
                 pastMedications.add(medicineCard);
             }
         }
@@ -220,10 +221,22 @@ public class ScheduleFragment extends Fragment {
             Date rightNow = Calendar.getInstance().getTime();
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
             if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
+            //  if(!medicineCard.isTaken()) {
                 futureMedications.add(medicineCard);
             }
         }
         return futureMedications;
+    }
+
+    private ArrayList<MedicineCard> parseTaken(ArrayList<MedicineCard> medicineCards) {
+        ArrayList<MedicineCard> takenMedications = new ArrayList<>();
+        for(MedicineCard medicineCard : medicineCards) {
+            if(medicineCard.isTaken()) {
+                takenMedications.add(medicineCard);
+            }
+        }
+
+        return takenMedications;
     }
 
 
