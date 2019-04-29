@@ -1,6 +1,9 @@
 package com.example.ourx;
 
 import android.app.Activity;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +14,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-public class SearchPopup extends Activity {
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.lifecycle.ViewModelProviders;
+
+public class SearchPopup extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     String[] titles;
     AutoCompleteTextView auto_complete;
+    MedicineEntity dataMedicine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +55,24 @@ public class SearchPopup extends Activity {
 
 
         });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 
     public void onClick(View v) {
         Intent intent = new Intent();
-        if (auto_complete.getText().toString().length() > 0) {
-            intent.putExtra("medication_name", auto_complete.getText().toString());
-            setResult(Activity.RESULT_OK, intent);
-            finish();
+        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+        String medName = auto_complete.getText().toString();
+        if (medName.length() > 0) {
+            dataMedicine = medicineViewModel.getMedicineByName(medName);
+            if (dataMedicine == null) {
+                intent.putExtra("medication_name", medName);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            } else {
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.button), "You have already added " + medName + ".", Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }
         }
     }
 }
