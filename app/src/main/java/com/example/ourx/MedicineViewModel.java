@@ -58,6 +58,23 @@ public class MedicineViewModel extends AndroidViewModel {
         }
     }
 
+    void update(MedicineEntity medicineEntity) {
+        new updateAsyncTask(medicineDao).execute(medicineEntity);
+    }
+
+    private static class updateAsyncTask extends AsyncTask<MedicineEntity, Void, Void> {
+        private MedicineDao mAsyncTaskDao;
+
+        updateAsyncTask(MedicineDao dao) {mAsyncTaskDao = dao;}
+
+        @Override
+        protected Void doInBackground(final MedicineEntity...params) {
+            mAsyncTaskDao.update(params[0]);
+            return null;
+        }
+
+    }
+
     void delete(MedicineEntity medicineEntity) {
         new deleteAsyncTask(medicineDao).execute(medicineEntity);
     }
