@@ -180,7 +180,6 @@ public class ScheduleFragment extends Fragment {
             Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
             migrateSnack.show();
 
-
         } else if (item.getItemId() == R.id.skip) {
 
             // Get the medication we want to delete
