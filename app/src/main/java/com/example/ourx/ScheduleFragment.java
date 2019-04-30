@@ -259,11 +259,12 @@ public class ScheduleFragment extends Fragment {
     /* Turns medicine entities into med cards to display in schedule */
     private ArrayList<MedicineCard> entityToMedCard(List<MedicineEntity> meds) {
         ArrayList<MedicineCard> medCards = new ArrayList<>();
+        Log.d("SIZE OF MEDS", Integer.toString(meds.size()));
         for (MedicineEntity med : meds) {
             Calendar time = Calendar.getInstance();
             if (time.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && med.MED_SUN != null
                     || time.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY && med.MED_MON != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY && med.MED_TUES != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY && med.MED_TUES != null
                     || time.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY && med.MED_WED != null
                     || time.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY && med.MED_THURS != null
                     || time.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && med.MED_FRI != null
