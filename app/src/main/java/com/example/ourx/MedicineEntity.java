@@ -69,12 +69,45 @@ public class MedicineEntity {
     @ColumnInfo(name = "med_taken")
     public String MED_TAKEN;
 
+    @ColumnInfo(name = "time_one_taken")
+    public String TIME_ONE_TAKEN;
+
+    @ColumnInfo(name = "time_two_taken")
+    public String TIME_TWO_TAKEN;
+
+    @ColumnInfo(name = "time_three_taken")
+    public String TIME_THREE_TAKEN;
+
+    @ColumnInfo(name = "time_four_taken")
+    public String TIME_FOUR_TAKEN;
+
+    @ColumnInfo(name = "time_five_taken")
+    public String TIME_FIVE_TAKEN;
+
+    @ColumnInfo(name = "time_one_skipped")
+    public String TIME_ONE_SKIPPED;
+
+    @ColumnInfo(name = "time_two_skipped")
+    public String TIME_TWO_SKIPPED;
+
+    @ColumnInfo(name = "time_three_skipped")
+    public String TIME_THREE_SKIPPED;
+
+    @ColumnInfo(name = "time_four_skipped")
+    public String TIME_FOUR_SKIPPED;
+
+    @ColumnInfo(name = "time_five_skipped")
+    public String TIME_FIVE_SKIPPED;
+
     /* NOTE: passed parameter names MUST be the same as variable names */
     public MedicineEntity(int mid, String MED_NAME, String MED_DOSAGE, String MED_UNIT, String MED_FOOD,
                           String MED_WATER, String MED_TIME_ONE, String MED_TIME_TWO, String MED_TIME_THREE,
                           String MED_TIME_FOUR, String MED_TIME_FIVE, String MED_SUN, String MED_MON,
                           String MED_TUES, String MED_WED, String MED_THURS, String MED_FRI,
-                          String MED_SAT, String MED_INSTRUCT, String MED_TAKEN) {
+                          String MED_SAT, String MED_INSTRUCT, String MED_TAKEN, String TIME_ONE_TAKEN,
+                          String TIME_TWO_TAKEN, String TIME_THREE_TAKEN, String TIME_FOUR_TAKEN,
+                          String TIME_FIVE_TAKEN, String TIME_ONE_SKIPPED, String TIME_TWO_SKIPPED,
+                          String TIME_THREE_SKIPPED, String TIME_FOUR_SKIPPED, String TIME_FIVE_SKIPPED) {
         this.mid = mid;
         this.MED_NAME = MED_NAME;
         this.MED_DOSAGE = MED_DOSAGE;
@@ -95,6 +128,16 @@ public class MedicineEntity {
         this.MED_SAT = MED_SAT;
         this.MED_INSTRUCT = MED_INSTRUCT;
         this.MED_TAKEN = MED_TAKEN;
+        this.TIME_ONE_TAKEN = TIME_ONE_TAKEN;
+        this.TIME_TWO_TAKEN = TIME_TWO_TAKEN;
+        this.TIME_THREE_TAKEN = TIME_THREE_TAKEN;
+        this.TIME_FOUR_TAKEN = TIME_FOUR_TAKEN;
+        this.TIME_FIVE_TAKEN = TIME_FIVE_TAKEN;
+        this.TIME_ONE_SKIPPED = TIME_ONE_SKIPPED;
+        this.TIME_TWO_SKIPPED = TIME_TWO_SKIPPED;
+        this.TIME_THREE_SKIPPED = TIME_THREE_SKIPPED;
+        this.TIME_FOUR_SKIPPED = TIME_FOUR_SKIPPED;
+        this.TIME_FIVE_SKIPPED = TIME_FIVE_SKIPPED;
     }
 
     public String getMED_NAME() {
@@ -169,5 +212,10 @@ public class MedicineEntity {
 
     public String getMED_TAKEN() {
         return MED_TAKEN;
+    }
+
+    /*TODO delete this?*/
+    public void setMED_TAKEN(String t) {
+        MED_TAKEN = t;
     }
 }

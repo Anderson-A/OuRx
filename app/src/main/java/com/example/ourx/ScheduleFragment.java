@@ -7,11 +7,14 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,14 +33,17 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass. TODO: make it back to Fragment instead of listFragment?
  */
 public class ScheduleFragment extends Fragment {
 
     boolean onPast = false;
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
-    ListView listView;
+    ArrayList<MedicineCard> takenMeds = new ArrayList<>();
+
+    MedicineEntity cardToMigrate;
+    MedicineViewModel medicineViewModel;
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -56,8 +64,7 @@ public class ScheduleFragment extends Fragment {
         // Apply any required UI change now that the Fragment is visible.
 
         /* The viewModel to hold all data (separates data from activity instances */
-        final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
-        listView = getView().findViewById(R.id.list_view);
+        medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
         pastMeds.clear();
         upcomingMeds.clear();
@@ -100,6 +107,33 @@ public class ScheduleFragment extends Fragment {
         });
 
 
+        /* Listen for changes in the medications database and display them
+        medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
+            @Override
+            public void onChanged(@Nullable final List<MedicineEntity> meds) {
+                /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete line
+                medications = entityToCabCard(meds);
+                final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), meds);
+                setListAdapter(adapter);
+            }
+        });
+        */
+
+        // Get the ListView the Cabinet_fragment is using and register it to have a context menu
+        //if() {
+        final ListView listView = (ListView) getView().findViewById(R.id.list_view);
+        registerForContextMenu(listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent infoIntent = new Intent(getActivity(), MedicationInfo.class);
+                TextView cabName = v.findViewById(R.id.med_name);
+                infoIntent.putExtra("name", cabName.getText().toString());
+                startActivity(infoIntent);
+            }
+        });
+
+
         /* Listen for changes in the medications database and display them */
         medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
             @Override
@@ -114,15 +148,54 @@ public class ScheduleFragment extends Fragment {
                 }
             }
         });
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent infoIntent = new Intent(getActivity(), MedicationInfo.class);
-                TextView cabName = v.findViewById(R.id.med_name);
-                infoIntent.putExtra("name", cabName.getText().toString());
-                startActivity(infoIntent);
-            }
-        });
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.schedule_context_menu, menu);
+        menu.setHeaderTitle("Select Action");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.migrate) {
+            // Get the medication we want to delete
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int index = info.position;
+            //ListView listView = getView().findViewById(R.id.list_view)
+            cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
+
+            //update field
+            cardToMigrate.setMED_TAKEN("true");
+
+
+            //update the dao
+            medicineViewModel.update(cardToMigrate );
+
+
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
+            migrateSnack.show();
+
+        } else if (item.getItemId() == R.id.skip) {
+
+            // Get the medication we want to delete
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int index = info.position;
+            //ListView listView = getView().findViewById(R.id.list_view)
+            cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
+            //deleteSnack.setAction("Undo", new CabinetFragment.undoListener());
+            migrateSnack.show();
+
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     /* Parses medicine cards by determining if they are scheduled in the past */
@@ -132,6 +205,7 @@ public class ScheduleFragment extends Fragment {
         for (MedicineCard medicineCard : medicineCards) {
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
             if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
+            //if(medicineCard.isTaken()) {    //TODO: switch back?
                 pastMedications.add(medicineCard);
             }
         }
@@ -146,11 +220,24 @@ public class ScheduleFragment extends Fragment {
             Date rightNow = Calendar.getInstance().getTime();
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
             if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
+            //  if(!medicineCard.isTaken()) {
                 futureMedications.add(medicineCard);
             }
         }
         return futureMedications;
     }
+
+    private ArrayList<MedicineCard> parseTaken(ArrayList<MedicineCard> medicineCards) {
+        ArrayList<MedicineCard> takenMedications = new ArrayList<>();
+        for(MedicineCard medicineCard : medicineCards) {
+            if(medicineCard.isTaken()) {
+                takenMedications.add(medicineCard);
+            }
+        }
+
+        return takenMedications;
+    }
+
 
     /* thanks @jake */
     private Date parseTime(String time) {

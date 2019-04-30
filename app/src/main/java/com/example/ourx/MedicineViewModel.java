@@ -32,6 +32,12 @@ public class MedicineViewModel extends AndroidViewModel {
         return allMedications;
     }
 
+    MedicineDao getMedicineDao() {
+        return medicineDao;
+    }
+
+
+
     /* Must insert using a new thread (not one the UI is using) to avoid crashing the app */
     void insert(MedicineEntity medicineEntity) {
         new insertAsyncTask(medicineDao).execute(medicineEntity);
@@ -50,6 +56,23 @@ public class MedicineViewModel extends AndroidViewModel {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
+    }
+
+    void update(MedicineEntity medicineEntity) {
+        new updateAsyncTask(medicineDao).execute(medicineEntity);
+    }
+
+    private static class updateAsyncTask extends AsyncTask<MedicineEntity, Void, Void> {
+        private MedicineDao mAsyncTaskDao;
+
+        updateAsyncTask(MedicineDao dao) {mAsyncTaskDao = dao;}
+
+        @Override
+        protected Void doInBackground(final MedicineEntity...params) {
+            mAsyncTaskDao.update(params[0]);
+            return null;
+        }
+
     }
 
     void delete(MedicineEntity medicineEntity) {

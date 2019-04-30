@@ -298,7 +298,9 @@ public class MedicationInfo extends AppCompatActivity {
                 dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
                 takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
                 medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,
-                saturday, instr, "false");
+                saturday, instr, "false", "false", "false", "false",
+                "false", "false", "false", "false",
+                "false", "false", "false");
 
         /* Inserts the entity into the database */
         medicineViewModel.insert(medicineEntity);
