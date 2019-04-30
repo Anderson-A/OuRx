@@ -1,6 +1,7 @@
 package com.example.ourx;
 
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class ScheduleFragment extends Fragment {
     boolean onPast = false;
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
+    ListView listView;
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -54,6 +57,7 @@ public class ScheduleFragment extends Fragment {
 
         /* The viewModel to hold all data (separates data from activity instances */
         final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+        listView = getView().findViewById(R.id.list_view);
 
         pastMeds.clear();
         upcomingMeds.clear();
@@ -108,6 +112,15 @@ public class ScheduleFragment extends Fragment {
                 } else {
                     displayUpcomingCards();
                 }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent infoIntent = new Intent(getActivity(), MedicationInfo.class);
+                TextView cabName = v.findViewById(R.id.med_name);
+                infoIntent.putExtra("name", cabName.getText().toString());
+                startActivity(infoIntent);
             }
         });
     }
