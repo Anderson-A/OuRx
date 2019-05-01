@@ -96,6 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/roboto"
         android:text="@string/add_food"
@@ -107,7 +108,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.902"
+        app:layout_constraintVertical_bias="0.916"
         tools:text="@string/add_food" />
 
     <TextView
@@ -123,7 +124,7 @@
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/take_with_food"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintHorizontal_bias="0.895"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/add_water" />
 
@@ -142,15 +143,15 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/checkBox_mon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.022"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/checkBox_mon"
-        android:layout_width="32dp"
-        android:layout_height="48dp"
+        android:layout_width="31dp"
+        android:layout_height="51dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -161,10 +162,10 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/checkBox_tues"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toEndOf="@+id/checkBox_sun"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.995" />
 
     <CheckBox
         android:id="@+id/checkBox_tues"
@@ -191,7 +192,7 @@
         android:text="   W"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkBox_thurs"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toEndOf="@+id/checkBox_tues" />
 
     <CheckBox
@@ -205,7 +206,7 @@
         android:text="  Th"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkBox_fri"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toEndOf="@+id/checkBox_wed" />
 
     <CheckBox
@@ -219,7 +220,7 @@
         android:text="   F"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkBox_sat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toEndOf="@+id/checkBox_thurs" />
 
     <CheckBox
@@ -235,10 +236,10 @@
         android:text="   S"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintHorizontal_bias="0.43"
         app:layout_constraintStart_toEndOf="@+id/checkBox_fri"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.05" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/special_instructions"
@@ -268,7 +269,7 @@
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/dosage_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.335"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
@@ -279,7 +280,7 @@
         android:layout_marginEnd="4dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/take_with_food_water"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toEndOf="@+id/take_with_food_water" />
 
     <CheckBox
@@ -287,10 +288,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="76dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/take_with_food_text"
         app:layout_constraintEnd_toStartOf="@+id/take_with_food_water"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toEndOf="@+id/take_with_food_text" />
 
     <Spinner
@@ -315,7 +316,7 @@
         android:entries="@array/hours"
         app:layout_constraintBaseline_toBaselineOf="@+id/frequency_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toEndOf="@+id/frequency_text" />
 
     <Button
@@ -327,7 +328,7 @@
         android:onClick="addTimes"
         app:layout_constraintBaseline_toBaselineOf="@+id/undo_time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/frequency_hour" />
 
     <Button
@@ -339,13 +340,13 @@
         android:onClick="removeTimes"
         app:layout_constraintBaseline_toBaselineOf="@+id/frequency_hour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.019"
-        app:layout_constraintStart_toEndOf="@+id/frequency_hour" />
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toEndOf="@+id/add_time" />
 
     <ListView
         android:id="@+id/times"
-        android:layout_width="91dp"
-        android:layout_height="81dp"
+        android:layout_width="90dp"
+        android:layout_height="53dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -353,10 +354,10 @@
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/add_time"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/undo_time"
         app:layout_constraintTop_toBottomOf="@+id/take_with_water"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.049" />
 
     <Button
         android:id="@+id/add_medication"
@@ -393,8 +394,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.267" />
-
+        app:layout_constraintVertical_bias="0.486" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
