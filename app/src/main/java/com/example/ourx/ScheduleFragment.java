@@ -189,17 +189,17 @@ public class ScheduleFragment extends Fragment {
             //update the dao
             medicineViewModel.update(cardToMigrate );
 
-            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved ", Snackbar.LENGTH_LONG);
             migrateSnack.show();
 
         } else if (item.getItemId() == R.id.skip) {
 
-            // Get the medication we want to delete
+            // Get the medication we want to skip
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
-            //ListView listView = getView().findViewById(R.id.list_view)
             cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
             String targetTime = upcomingMeds.get(index).getTimeToTake();
+
             //update field
             cardToMigrate.setMED_TAKEN("false");
             if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
@@ -216,8 +216,8 @@ public class ScheduleFragment extends Fragment {
 
             medicineViewModel.update(cardToMigrate );
 
-            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
-            //deleteSnack.setAction("Undo", new CabinetFragment.undoListener());
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped ", Snackbar.LENGTH_LONG);
+            //migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
         } else {
@@ -225,6 +225,39 @@ public class ScheduleFragment extends Fragment {
         }
 
         return true;
+    }
+
+    public class undoListener implements View.OnClickListener {
+        int index;
+
+        undoListener (int i) {
+            index = i;
+        }
+        @Override
+        public void onClick(View v) {
+            undoDeletion(index);
+        }
+    }
+
+    public void undoDeletion(int index) {
+        String targetTime = upcomingMeds.get(index).getTimeToTake();
+        //update field
+
+        cardToMigrate.setMED_TAKEN("false");
+        if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
+            cardToMigrate.setMED_ONE("false", "false");
+        } else if(targetTime.equals(cardToMigrate.getMED_TIME_TWO())) {
+            cardToMigrate.setMED_TWO("false", "false");
+        } else if (targetTime.equals(cardToMigrate.getMED_TIME_THREE())) {
+            cardToMigrate.setMED_THREE("false", "false");
+        } else if (targetTime.equals(cardToMigrate.getMED_TIME_FOUR())) {
+            cardToMigrate.setMED_FOUR("false", "false");
+        } else if (targetTime.equals(cardToMigrate.getMED_TIME_FIVE())) {
+            cardToMigrate.setMED_FIVE("false", "false");
+        }
+
+        medicineViewModel.update(cardToMigrate );
+        //ViewModelProviders.of(this).get(MedicineViewModel.class).insert(cardToMigrate);
     }
 
     /* Parses medicine cards by determining if they are scheduled in the past */
