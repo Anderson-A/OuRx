@@ -218,4 +218,18 @@ public class MedicineEntity {
     public void setMED_TAKEN(String t) {
         MED_TAKEN = t;
     }
+
+    public void setMED_ONE(String taken, String skipped) { TIME_ONE_TAKEN = taken; TIME_ONE_SKIPPED = skipped;}
+
+    public void setMED_TWO(String taken, String skipped) { TIME_TWO_TAKEN = taken; TIME_TWO_SKIPPED = skipped;}
+
+    public void setMED_THREE(String taken, String skipped) { TIME_THREE_TAKEN = taken; TIME_THREE_SKIPPED = skipped;}
+
+    public void setMED_FOUR(String taken, String skipped) { TIME_FOUR_TAKEN = taken; TIME_FOUR_SKIPPED = skipped;}
+
+    public void setMED_FIVE(String taken, String skipped) { TIME_FIVE_TAKEN = taken; TIME_FIVE_SKIPPED = skipped;}
+
+
+
+
 }

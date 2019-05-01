@@ -5,11 +5,14 @@ public class MedicineCard {
     private String name;
     private String timeToTake;
     private boolean taken;
+    private boolean skipped;
 
-    MedicineCard(String medName, String time, boolean taken) {
+    MedicineCard(String medName, String time, boolean taken, boolean skipped) {
         this.name = medName;
         this.timeToTake = time;
         this.taken = taken;
+        this.skipped = skipped;
+
     }
 
     public String getName() {
@@ -31,4 +34,6 @@ public class MedicineCard {
     public boolean isTaken() {
         return taken;
     }
+
+    public boolean isSkipped() {return skipped;}
 }
