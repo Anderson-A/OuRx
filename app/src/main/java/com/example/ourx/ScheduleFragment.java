@@ -40,7 +40,6 @@ public class ScheduleFragment extends Fragment {
     boolean onPast = false;
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
-    ArrayList<MedicineCard> takenMeds = new ArrayList<>();
 
     MedicineEntity cardToMigrate;
     MedicineViewModel medicineViewModel;
