@@ -220,8 +220,8 @@ public class ScheduleFragment extends Fragment {
         Date rightNow = Calendar.getInstance().getTime();
         for (MedicineCard medicineCard : medicineCards) {
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
-            if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
-            //if(medicineCard.isTaken()) {    //TODO: switch back?
+            //if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
+            if(medicineCard.isTaken()) {    //TODO: switch back?
                 //if(medicineCard.getTimeToTake().equals() )
                 pastMedications.add(medicineCard);
             }
@@ -236,8 +236,8 @@ public class ScheduleFragment extends Fragment {
         for (MedicineCard medicineCard : medicineCards) {
             Date rightNow = Calendar.getInstance().getTime();
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
-            if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
-            //  if(!medicineCard.isTaken()) {
+            //if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
+              if(!medicineCard.isTaken()) {
                 futureMedications.add(medicineCard);
             }
         }
