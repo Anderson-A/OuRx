@@ -74,6 +74,8 @@ public class ScheduleFragment extends Fragment {
             TextView pastText = getView().findViewById(R.id.past);
             pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
             this.displayPastCards();
+
+
         } else {
             TextView upcomingText = getView().findViewById(R.id.upcoming);
             upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
@@ -120,7 +122,6 @@ public class ScheduleFragment extends Fragment {
         */
 
         // Get the ListView the Cabinet_fragment is using and register it to have a context menu
-        //if() {
         final ListView listView = (ListView) getView().findViewById(R.id.list_view);
         registerForContextMenu(listView);
 
@@ -153,10 +154,12 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.schedule_context_menu, menu);
-        menu.setHeaderTitle("Select Action");
+        if (onPast == false) {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.schedule_context_menu, menu);
+            menu.setHeaderTitle("Select Action");
+        }
     }
 
     @Override
