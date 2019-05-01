@@ -199,9 +199,22 @@ public class ScheduleFragment extends Fragment {
             int index = info.position;
             //ListView listView = getView().findViewById(R.id.list_view)
             cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
-            if (cardToMigrate.getMED_TIME_ONE() != null) {
+            String targetTime = upcomingMeds.get(index).getTimeToTake();
+            //update field
+            cardToMigrate.setMED_TAKEN("false");
+            if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
                 cardToMigrate.setMED_ONE("false", "true");
+            } else if(targetTime.equals(cardToMigrate.getMED_TIME_TWO())) {
+                cardToMigrate.setMED_TWO("false", "true");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_THREE())) {
+                cardToMigrate.setMED_THREE("false", "true");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_FOUR())) {
+                cardToMigrate.setMED_FOUR("false", "true");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_FIVE())) {
+                cardToMigrate.setMED_FIVE("false", "true");
             }
+
+            medicineViewModel.update(cardToMigrate );
 
             Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
             //deleteSnack.setAction("Undo", new CabinetFragment.undoListener());
@@ -222,7 +235,6 @@ public class ScheduleFragment extends Fragment {
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
             //if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
             if(medicineCard.isTaken()) {    //TODO: switch back?
-                //if(medicineCard.getTimeToTake().equals() )
                 pastMedications.add(medicineCard);
             }
         }
@@ -237,7 +249,7 @@ public class ScheduleFragment extends Fragment {
             Date rightNow = Calendar.getInstance().getTime();
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
             //if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
-              if(!medicineCard.isTaken()) {
+              if(medicineCard.isTaken() == false && medicineCard.isSkipped() == false) {
                 futureMedications.add(medicineCard);
             }
         }
