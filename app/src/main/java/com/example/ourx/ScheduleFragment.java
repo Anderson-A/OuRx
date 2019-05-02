@@ -40,8 +40,7 @@ public class ScheduleFragment extends Fragment {
     boolean onPast = false;
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
-    ArrayList<MedicineCard> takenMeds = new ArrayList<>();
-
+    String targetTime;
     MedicineEntity cardToMigrate;
     MedicineViewModel medicineViewModel;
 
@@ -74,6 +73,8 @@ public class ScheduleFragment extends Fragment {
             TextView pastText = getView().findViewById(R.id.past);
             pastText.setPaintFlags(pastText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
             this.displayPastCards();
+
+
         } else {
             TextView upcomingText = getView().findViewById(R.id.upcoming);
             upcomingText.setPaintFlags(upcomingText.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
@@ -120,7 +121,6 @@ public class ScheduleFragment extends Fragment {
         */
 
         // Get the ListView the Cabinet_fragment is using and register it to have a context menu
-        //if() {
         final ListView listView = (ListView) getView().findViewById(R.id.list_view);
         registerForContextMenu(listView);
 
@@ -129,6 +129,7 @@ public class ScheduleFragment extends Fragment {
                 Intent infoIntent = new Intent(getActivity(), MedicationInfo.class);
                 TextView cabName = v.findViewById(R.id.med_name);
                 infoIntent.putExtra("name", cabName.getText().toString());
+
                 startActivity(infoIntent);
             }
         });
@@ -153,10 +154,12 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.schedule_context_menu, menu);
-        menu.setHeaderTitle("Select Action");
+        if (onPast == false) {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.schedule_context_menu, menu);
+            menu.setHeaderTitle("Select Action");
+        }
     }
 
     @Override
@@ -168,27 +171,54 @@ public class ScheduleFragment extends Fragment {
             int index = info.position;
             //ListView listView = getView().findViewById(R.id.list_view)
             cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
-
+            targetTime = upcomingMeds.get(index).getTimeToTake();
             //update field
             cardToMigrate.setMED_TAKEN("true");
-
+            if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
+                cardToMigrate.setMED_ONE("true", "false");
+            } else if(targetTime.equals(cardToMigrate.getMED_TIME_TWO())) {
+                cardToMigrate.setMED_TWO("true", "false");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_THREE())) {
+                cardToMigrate.setMED_THREE("true", "false");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_FOUR())) {
+                cardToMigrate.setMED_FOUR("true", "false");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_FIVE())) {
+                cardToMigrate.setMED_FIVE("true", "false");
+            }
 
             //update the dao
             medicineViewModel.update(cardToMigrate );
 
-
-            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved ", Snackbar.LENGTH_LONG);
+            migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
         } else if (item.getItemId() == R.id.skip) {
 
-            // Get the medication we want to delete
+            // Get the medication we want to skip
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
-            //ListView listView = getView().findViewById(R.id.list_view)
             cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
-            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped " + cardToMigrate.MED_TAKEN, Snackbar.LENGTH_LONG);
-            //deleteSnack.setAction("Undo", new CabinetFragment.undoListener());
+            String targetTime = upcomingMeds.get(index).getTimeToTake();
+
+            //update field
+            cardToMigrate.setMED_TAKEN("false");
+            if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
+                cardToMigrate.setMED_ONE("false", "true");
+            } else if(targetTime.equals(cardToMigrate.getMED_TIME_TWO())) {
+                cardToMigrate.setMED_TWO("false", "true");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_THREE())) {
+                cardToMigrate.setMED_THREE("false", "true");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_FOUR())) {
+                cardToMigrate.setMED_FOUR("false", "true");
+            } else if (targetTime.equals(cardToMigrate.getMED_TIME_FIVE())) {
+                cardToMigrate.setMED_FIVE("false", "true");
+            }
+
+            medicineViewModel.update(cardToMigrate );
+
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped ", Snackbar.LENGTH_LONG);
+            migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
         } else {
@@ -198,14 +228,47 @@ public class ScheduleFragment extends Fragment {
         return true;
     }
 
+    public class undoListener implements View.OnClickListener {
+        int index;
+
+        undoListener (int i) {
+            index = i;
+        }
+        @Override
+        public void onClick(View v) {
+            undoDeletion(index);
+        }
+    }
+
+    public void undoDeletion(int index) {
+        //String targetTime = upcomingMeds.get(index).getTimeToTake();
+        //update field
+
+        cardToMigrate.setMED_TAKEN("false");
+        if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
+            cardToMigrate.setMED_ONE("false", "false");
+        } else if(targetTime.equals(cardToMigrate.getMED_TIME_TWO())) {
+            cardToMigrate.setMED_TWO("false", "false");
+        } else if (targetTime.equals(cardToMigrate.getMED_TIME_THREE())) {
+            cardToMigrate.setMED_THREE("false", "false");
+        } else if (targetTime.equals(cardToMigrate.getMED_TIME_FOUR())) {
+            cardToMigrate.setMED_FOUR("false", "false");
+        } else if (targetTime.equals(cardToMigrate.getMED_TIME_FIVE())) {
+            cardToMigrate.setMED_FIVE("false", "false");
+        }
+
+        medicineViewModel.update(cardToMigrate );
+        //ViewModelProviders.of(this).get(MedicineViewModel.class).insert(cardToMigrate);
+    }
+
     /* Parses medicine cards by determining if they are scheduled in the past */
     private ArrayList<MedicineCard> parsePast(ArrayList<MedicineCard> medicineCards) {
         ArrayList<MedicineCard> pastMedications = new ArrayList<>();
         Date rightNow = Calendar.getInstance().getTime();
         for (MedicineCard medicineCard : medicineCards) {
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
-            if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
-            //if(medicineCard.isTaken()) {    //TODO: switch back?
+            //if (medicationTime.before(rightNow) && medicineCard.isTaken()) {
+            if(medicineCard.isTaken()) {    //TODO: switch back?
                 pastMedications.add(medicineCard);
             }
         }
@@ -219,8 +282,8 @@ public class ScheduleFragment extends Fragment {
         for (MedicineCard medicineCard : medicineCards) {
             Date rightNow = Calendar.getInstance().getTime();
             Date medicationTime = parseTime(medicineCard.getTimeToTake());
-            if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
-            //  if(!medicineCard.isTaken()) {
+            //if (!medicationTime.before(rightNow) || !medicineCard.isTaken()) {
+              if(medicineCard.isTaken() == false && medicineCard.isSkipped() == false) {
                 futureMedications.add(medicineCard);
             }
         }
@@ -270,26 +333,58 @@ public class ScheduleFragment extends Fragment {
                     || time.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && med.MED_FRI != null
                     || time.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY && med.MED_SAT != null) {
                 boolean taken = false;
-                if (med.MED_TAKEN.equals("true")) {
+                boolean skipped = false;
+                if (med.TIME_ONE_TAKEN.equals("true")) {
                     taken = true;
+                }
+                if (med.TIME_ONE_SKIPPED.equals("true")) {
+                    skipped = true;
                 }
 
                 /* TODO: find solution to distinguish what time something has been taken
                  * Idea 1: have 5 columns (taken 1, taken 2, etc)
                  * Idea 2: original idea of a new entry for each time. Updating problem. */
-                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_ONE, taken));
+                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_ONE, taken, skipped));
+                taken = false;
+                skipped = false;
                 /* Displays each new time instance as a new card */
                 if (med.MED_TIME_TWO != null) {
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_TWO, taken));
+                    if(med.TIME_TWO_TAKEN.equals("true"))
+                        taken = true;
+                    if (med.TIME_TWO_SKIPPED.equals("true")) {
+                        skipped = true;
+                    }
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_TWO, taken, skipped));
+                    taken = false;
+                    skipped = false;
                 }
                 if (med.MED_TIME_THREE != null) {
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_THREE, taken));
+                    if(med.TIME_THREE_TAKEN.equals("true"))
+                        taken = true;
+                    if (med.TIME_THREE_SKIPPED.equals("true")) {
+                        skipped = true;
+                    }
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_THREE, taken, skipped));
+                    taken = false;
+                    skipped = false;
                 }
                 if (med.MED_TIME_FOUR != null) {
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FOUR, taken));
+                    if(med.TIME_FOUR_TAKEN.equals("true"))
+                        taken = true;
+                    if (med.TIME_FOUR_SKIPPED.equals("true")) {
+                        skipped = true;
+                    }
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FOUR, taken, skipped));
+                    taken = false;
+                    skipped = false;
                 }
                 if (med.MED_TIME_FIVE != null) {
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FIVE, taken));
+                    if(med.TIME_FIVE_TAKEN.equals("true"))
+                        taken = true;
+                    if (med.TIME_FIVE_SKIPPED.equals("true")) {
+                        skipped = true;
+                    }
+                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FIVE, taken, skipped));
                 }
             }
         }
