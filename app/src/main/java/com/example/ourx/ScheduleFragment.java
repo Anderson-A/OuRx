@@ -40,7 +40,7 @@ public class ScheduleFragment extends Fragment {
     boolean onPast = false;
     ArrayList<MedicineCard> pastMeds = new ArrayList<>();
     ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
-
+    String targetTime;
     MedicineEntity cardToMigrate;
     MedicineViewModel medicineViewModel;
 
@@ -129,6 +129,7 @@ public class ScheduleFragment extends Fragment {
                 Intent infoIntent = new Intent(getActivity(), MedicationInfo.class);
                 TextView cabName = v.findViewById(R.id.med_name);
                 infoIntent.putExtra("name", cabName.getText().toString());
+
                 startActivity(infoIntent);
             }
         });
@@ -170,7 +171,7 @@ public class ScheduleFragment extends Fragment {
             int index = info.position;
             //ListView listView = getView().findViewById(R.id.list_view)
             cardToMigrate = (MedicineEntity) medicineViewModel.getMedicineByName(upcomingMeds.get(index).getName());
-            String targetTime = upcomingMeds.get(index).getTimeToTake();
+            targetTime = upcomingMeds.get(index).getTimeToTake();
             //update field
             cardToMigrate.setMED_TAKEN("true");
             if (targetTime.equals(cardToMigrate.getMED_TIME_ONE())) {
@@ -189,6 +190,7 @@ public class ScheduleFragment extends Fragment {
             medicineViewModel.update(cardToMigrate );
 
             Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved ", Snackbar.LENGTH_LONG);
+            migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
         } else if (item.getItemId() == R.id.skip) {
@@ -216,7 +218,7 @@ public class ScheduleFragment extends Fragment {
             medicineViewModel.update(cardToMigrate );
 
             Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped ", Snackbar.LENGTH_LONG);
-            //migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
+            migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
         } else {
@@ -239,7 +241,7 @@ public class ScheduleFragment extends Fragment {
     }
 
     public void undoDeletion(int index) {
-        String targetTime = upcomingMeds.get(index).getTimeToTake();
+        //String targetTime = upcomingMeds.get(index).getTimeToTake();
         //update field
 
         cardToMigrate.setMED_TAKEN("false");
