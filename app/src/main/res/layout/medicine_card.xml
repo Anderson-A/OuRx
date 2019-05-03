@@ -24,20 +24,22 @@
 
     <TextView
         android:id="@+id/med_name"
-        android:layout_width="133dp"
-        android:layout_height="55dp"
+        android:layout_width="150dp"
+        android:layout_height="73dp"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:padding="10dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/med_time"
         app:layout_constraintStart_toEndOf="@+id/pill_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.434" />
 
     <TextView
         android:id="@+id/med_time"
