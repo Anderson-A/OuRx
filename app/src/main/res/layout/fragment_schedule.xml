@@ -9,7 +9,7 @@
 
     <View
         android:id="@+id/blue_background"
-        android:layout_width="412dp"
+        android:layout_width="1000dp"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
