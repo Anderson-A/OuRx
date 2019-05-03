@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentTransaction transaction;
     private Fragment cabinetFrag; // Fragment for displaying the medicine cabinet
     private Fragment scheduleFrag; // Fragment for displaying the schedule
+ //   private Fragment mapFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
         // initialize fragments
         cabinetFrag = new CabinetFragment();
         scheduleFrag = new ScheduleFragment();
+    //    mapFrag = new MapsActivity();
 
         // start off in the medication schedule fragment
         getSupportFragmentManager().beginTransaction()
@@ -158,6 +160,12 @@ public class MainActivity extends AppCompatActivity
             // Commit the transaction
             transaction.commit();
         } else if (id == R.id.nav_map) {
+//            transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fragment_container, mapFrag);
+//            transaction.commit();
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+
 
         } else  if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
