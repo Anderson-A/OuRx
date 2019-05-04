@@ -33,6 +33,59 @@ GOALS:
 5) (Optional) Notifications shown on screen when it's time to take medication
 6) (Essential) Don't let Jake break the build again... :(
 
+Sprint 2 README
+
+  Team project 4
+  Second Sprint
+  Kate Cheney, Anderson Adon, Rachel Rosset, Jake Flynn
+ 
+  Goals Overview:
+     - Create Database
+     - Turn Cabinet and Schedule to Fragments (started as activities)
+     - Medication Info view (what shows up when you click on a medicine card)
+     - Implement logic for switching med cards between "past" and "upcoming"
+     - Deletion of medications from cabinet
+     - Bonus: Basic Google Maps API interaction for Pharmacy Maps
+  
+ General notes: Maps Search does not work (we decided to implement the basic
+ functionality even though it is a part of Sprint 3). But the maps API works
+ and the search bar autofills with names being searched. Note, you might have to
+ update your Google Play services to see it. We also have testing as a big "TODO"
+ in our next sprint outline.
+ 
+ Task Breakdown:
+ Jake:
+ - Create an activity for medication info
+ - Edit database from within medication info
+ - Fix Add Medication layout
+
+ Kate:
+ - Build database skeleton w/ persistence
+ - Help Jake with SQL queries to display medication info
+ - Fix layouts for tablet screen
+ - Link to Google Maps API when pharmacy is clicked on
+ - Autofill Google maps search bar
+ - Fix med cards so that long text names aren’t cut off
+
+ Rachel:
+ - Context menus to “skip” medication from schedule (done, needs testing)
+ - Context menus to migrate medication from upcoming to taken (done needs testing)
+ - Context menus
+ - Update database with 5 times, 5 “taken” and 5 “forgotten” fields to help migration log    ic
+ - Make no context menu in past
+ - Add similar “undo” button from cabinet fragment
+
+ Anderson:
+ - Convert activities to fragments
+ - Context menus in cabinet with deletion option
+ - Delete a medication from the database
+ - Notifications (optional but working on it)
+
+
+ Still left to do:
+ - Notifications
+ - Improve maps functionality
+ - TEST!!!!!
 
 
 
