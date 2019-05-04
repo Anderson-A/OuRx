@@ -19,11 +19,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    /* old code from before using database, TODO: delete these variables
-    static final int REQUEST_CODE = 1;
-    ArrayList<MedicineCard> upcomingMeds = new ArrayList<>();
-    Date currentTime;
-    */
     // For doing operations with fragments
     private FragmentTransaction transaction;
     private Fragment cabinetFrag; // Fragment for displaying the medicine cabinet
@@ -54,9 +49,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        /* code from before using database TODO: delete line
-        currentTime = Calendar.getInstance().getTime(); */
 
     }
 
@@ -93,43 +85,6 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-    // Old code for when we had the data passed back using intents before database TODO: delete
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        currentTime = Calendar.getInstance().getTime();
-        Calendar test;
-
-        // This will find the time closest to the current time and put it in the Upcoming Medication array
-        if (resultCode == Activity.RESULT_OK) {
-            String medName = data.getStringExtra("medication_name");
-            String soonestTime = "";
-            for (String time : data.getStringArrayExtra("all_times")) {
-                String[] hourAndTime = time.split("\\s+");
-                int amOrPm;
-                if (hourAndTime[1].equals("am")) {
-                    amOrPm = 0;
-                } else {
-                    amOrPm = 1;
-                }
-                test = Calendar.getInstance();
-                test.set(Calendar.HOUR, Integer.parseInt(hourAndTime[0]));
-                test.set(Calendar.AM_PM, amOrPm);
-
-                if (currentTime.before(test.getTime())){
-                    soonestTime = time;
-                    break;
-                }
-            }
-            if (soonestTime.length() > 0) {
-                MedicineCard newlyAddedMedication = new MedicineCard(medName, soonestTime);
-                upcomingMeds.add(newlyAddedMedication);
-
-            }
-
-        }
-
-    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
