@@ -10,61 +10,61 @@ import androidx.room.PrimaryKey;
 public class MedicineEntity {
 
     @PrimaryKey(autoGenerate = true)
-    public int mid;
+    private int mid;
 
     @ColumnInfo(name = "med_name")
-    public String MED_NAME;
+    private String MED_NAME;
 
     @ColumnInfo(name = "med_dosage")
-    public String MED_DOSAGE;
+    private String MED_DOSAGE;
 
     @ColumnInfo(name = "med_unit")
-    public String MED_UNIT;
+    private String MED_UNIT;
 
     @ColumnInfo(name = "med_food")
-    public String MED_FOOD;
+    private String MED_FOOD;
 
     @ColumnInfo(name = "med_water")
-    public String MED_WATER;
+    private String MED_WATER;
 
     @ColumnInfo(name = "med_time_one")
-    public String MED_TIME_ONE;
+    private String MED_TIME_ONE;
 
     @ColumnInfo(name = "med_time_two")
-    public String MED_TIME_TWO;
+    private String MED_TIME_TWO;
 
     @ColumnInfo(name = "med_time_three")
-    public String MED_TIME_THREE;
+    private String MED_TIME_THREE;
 
     @ColumnInfo(name = "med_time_four")
-    public String MED_TIME_FOUR;
+    private String MED_TIME_FOUR;
 
     @ColumnInfo(name = "med_time_five")
-    public String MED_TIME_FIVE;
+    private String MED_TIME_FIVE;
 
     @ColumnInfo(name = "med_sun")
-    public String MED_SUN;
+    private String MED_SUN;
 
     @ColumnInfo(name = "med_mon")
-    public String MED_MON;
+    private String MED_MON;
 
     @ColumnInfo(name = "med_tues")
-    public String MED_TUES;
+    private String MED_TUES;
 
     @ColumnInfo(name = "med_wed")
-    public String MED_WED;
+    private String MED_WED;
 
     @ColumnInfo(name = "med_thurs")
-    public String MED_THURS;
+    private String MED_THURS;
 
     @ColumnInfo(name = "med_fri")
-    public String MED_FRI;
+    private String MED_FRI;
 
     @ColumnInfo(name = "med_sat")
-    public String MED_SAT;
+    private String MED_SAT;
 
     @ColumnInfo(name = "med_instruct")
-    public String MED_INSTRUCT;
+    private String MED_INSTRUCT;
 
     @ColumnInfo(name = "med_taken")
     public String MED_TAKEN;
@@ -140,78 +140,78 @@ public class MedicineEntity {
         this.TIME_FIVE_SKIPPED = TIME_FIVE_SKIPPED;
     }
 
+    public int getMid() { return this.mid; }
+
     public String getMED_NAME() {
-        return MED_NAME;
+        return this.MED_NAME;
     }
 
     public String getMED_DOSAGE() {
-        return MED_DOSAGE;
+        return this.MED_DOSAGE;
     }
 
     public String getMED_UNIT() {
-        return MED_UNIT;
+        return this.MED_UNIT;
     }
 
     public String getMED_FOOD() {
-        return MED_FOOD;
+        return this.MED_FOOD;
     }
 
     public String getMED_WATER() {
-        return MED_WATER;
+        return this.MED_WATER;
     }
 
-    public String getMED_TIME_ONE() { return MED_TIME_ONE; }
+    public String getMED_TIME_ONE() { return this.MED_TIME_ONE; }
 
     public String getMED_TIME_TWO() {
-        return MED_TIME_TWO;
+        return this.MED_TIME_TWO;
     }
 
     public String getMED_TIME_THREE() {
-        return MED_TIME_THREE;
+        return this.MED_TIME_THREE;
     }
 
-    public String getMED_TIME_FOUR() {
-        return MED_TIME_FOUR;
-    }
+    public String getMED_TIME_FOUR() { return this.MED_TIME_FOUR; }
 
     public String getMED_TIME_FIVE() {
-        return MED_TIME_FIVE;
+        return this.MED_TIME_FIVE;
     }
 
     public String getMED_SUN() {
-        return MED_SUN;
+        return this.MED_SUN;
     }
 
     public String getMED_MON() {
-        return MED_MON;
+        return this.MED_MON;
     }
 
     public String getMED_TUES() {
-        return MED_TUES;
+        return this.MED_TUES;
     }
 
     public String getMED_WED() {
-        return MED_WED;
+        return this.MED_WED;
     }
 
     public String getMED_THURS() {
-        return MED_THURS;
+        return this.MED_THURS;
     }
 
     public String getMED_FRI() {
-        return MED_FRI;
+        return this.MED_FRI;
     }
 
     public String getMED_SAT() {
-        return MED_SAT;
+        return this.MED_SAT;
     }
 
     public String getMED_INSTRUCT() {
-        return MED_INSTRUCT;
+        return this.MED_INSTRUCT;
     }
 
     public String getMED_TAKEN() {
-        return MED_TAKEN;
+        return this.MED_TAKEN;
     }
 
     /*TODO delete this?*/

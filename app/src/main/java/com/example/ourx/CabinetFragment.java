@@ -107,7 +107,7 @@ public class CabinetFragment extends ListFragment {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
             cardToDelete = (MedicineEntity) getListAdapter().getItem(index);
-            Snackbar deleteSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToDelete.MED_NAME + " deleted", Snackbar.LENGTH_LONG);
+            Snackbar deleteSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToDelete.getMED_NAME() + " deleted", Snackbar.LENGTH_LONG);
             deleteSnack.setAction("Undo", new undoListener());
             deleteSnack.show();
 

@@ -216,7 +216,7 @@
 
 
     <Button
-        android:id="@+id/add_medication"
+        android:id="@+id/change_medication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"

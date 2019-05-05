@@ -1,9 +1,6 @@
 package com.example.ourx;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,14 +20,13 @@ import java.util.Calendar;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.lifecycle.ViewModelProviders;
 
 public class MedicationInfo extends AppCompatActivity {
     CheckBox take_with_food, take_with_water;
     EditText dosage, special_instructions;
     Spinner unit, frequency;
-    Button add_time, add_medication;
+    Button add_time, change_medication;
     ListView times;
     ArrayList<String> allTimes;
     ArrayAdapter<String> adapter;
@@ -71,7 +67,7 @@ public class MedicationInfo extends AppCompatActivity {
 
         //Initialize Buttons
         add_time = findViewById(R.id.add_time);
-        add_medication = findViewById(R.id.add_medication);
+        change_medication = findViewById(R.id.change_medication);
 
         //Initialize List
         times = findViewById(R.id.times);
@@ -141,7 +137,7 @@ public class MedicationInfo extends AppCompatActivity {
     }
 
     public void unlockLayout() {
-        Snackbar snackbar = Snackbar.make(add_medication, "You may now edit this medication.", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(change_medication, "You may now edit this medication.", Snackbar.LENGTH_SHORT);
         snackbar.show();
         take_with_food.setClickable(true);
         take_with_water.setClickable(true);
@@ -157,7 +153,7 @@ public class MedicationInfo extends AppCompatActivity {
 
         unit.setVisibility(View.VISIBLE);
         frequency.setVisibility(View.VISIBLE);
-        add_medication.setVisibility(View.VISIBLE);
+        change_medication.setVisibility(View.VISIBLE);
 
         unit_text.setVisibility(View.INVISIBLE);
     }
@@ -179,7 +175,7 @@ public class MedicationInfo extends AppCompatActivity {
 
         unit.setVisibility(View.INVISIBLE);
         frequency.setVisibility(View.INVISIBLE);
-        add_medication.setVisibility(View.INVISIBLE);
+        change_medication.setVisibility(View.INVISIBLE);
 
         unit_text.setText(unit.getSelectedItem().toString());
         unit_text.setVisibility(View.VISIBLE);
@@ -188,7 +184,7 @@ public class MedicationInfo extends AppCompatActivity {
     public void addTimes(View v) {
         String item = frequency.getSelectedItem().toString();
         if (allTimes.contains(item)) {
-            Snackbar snackbar = Snackbar.make(add_medication, "You have already added " + item + ".", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(change_medication, "You have already added " + item + ".", Snackbar.LENGTH_SHORT);
             snackbar.show();
         } else {
             allTimes.add(item);
@@ -202,36 +198,36 @@ public class MedicationInfo extends AppCompatActivity {
             allTimes.remove(item);
             adapter.notifyDataSetChanged();
         } else {
-            Snackbar snackbar = Snackbar.make(add_medication, "You have not added " + item + ".", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(change_medication, "You have not added " + item + ".", Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
     }
 
     public boolean onAddMedication(View v) {
 
-        ViewModelProviders.of(this).get(MedicineViewModel.class).delete(dataMedicine);
+        int editingID = dataMedicine.getMid();
 
         final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
         boolean requiredFieldsFilledIn = true;
         if (dosage.getText().toString().equals("")) {
             dosage.requestFocus();
-            Snackbar.make(add_medication, "Please enter a dosage.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "Please enter a dosage.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
         else if (allTimes.size() == 0) {
-            Snackbar.make(add_medication, "Please enter at least one time.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "Please enter at least one time.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
         else if (allTimes.size() > 5) {
-            Snackbar.make(add_medication, "No More than 5 times.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "No More than 5 times.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
         else if (weekdaysWidget.noDaySelected()) {
-            Snackbar.make(add_medication, "Please select at least one day.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "Please select at least one day.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
@@ -289,7 +285,7 @@ public class MedicationInfo extends AppCompatActivity {
         }
 
         /* Creates a new medication entry based on entered data */
-        MedicineEntity medicineEntity = new MedicineEntity(0, medication_name.getText().toString(),
+        MedicineEntity medicineEntity = new MedicineEntity(editingID, medication_name.getText().toString(),
                 dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
                 takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
                 medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,
@@ -298,9 +294,9 @@ public class MedicationInfo extends AppCompatActivity {
                 "false", "false", "false");
 
         /* Inserts the entity into the database */
-        medicineViewModel.insert(medicineEntity);
+        medicineViewModel.update(medicineEntity);
 
-        Snackbar snackbar = Snackbar.make(add_medication, "Changes saved.", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(change_medication, "Changes saved.", Snackbar.LENGTH_SHORT);
         snackbar.show();
         lockLayout();
         return true;
