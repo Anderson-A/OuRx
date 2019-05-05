@@ -40,7 +40,7 @@ public class MedicationInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.medication_info);
+        setContentView(R.layout.activity_medication_info);
 
      //   Log.d("list of meds", medicineList.get(0).getMED_NAME());
      //   Log.d("list of meds", "HELLO LOOK AT ME");

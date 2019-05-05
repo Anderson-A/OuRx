@@ -122,4 +122,5 @@
     <string name="add_med_button">Add Medication</string>
     <string name="medication_name_default">Name</string>
     <string name="change_medication_button">Change Medication</string>
+    <string name="action_edit">Edit Medication</string>
 </resources>

@@ -36,7 +36,7 @@ public class AddMedication extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_medication);
+        setContentView(R.layout.activity_add_medication);
 
 
         //Initialize Medication Name
@@ -61,6 +61,7 @@ public class AddMedication extends AppCompatActivity {
         //Initialize Buttons
         add_time = findViewById(R.id.add_time);
         add_medication = findViewById(R.id.add_medication);
+        add_medication.setEnabled(true);
 
         //Initialize List
         times = findViewById(R.id.times);
@@ -79,6 +80,7 @@ public class AddMedication extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             medication_name.setText(data.getStringExtra("medication_name"));
         }
@@ -196,6 +198,7 @@ public class AddMedication extends AppCompatActivity {
         /* Inserts the entity into the database */
         medicineViewModel.insert(medicineEntity);
 
+        add_medication.setEnabled(false); // fixes bug where tapping multiple times will add it multiple times
         finish();
         return true;
     }

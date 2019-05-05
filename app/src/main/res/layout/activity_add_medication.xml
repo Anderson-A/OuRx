@@ -37,7 +37,7 @@
 
     <EditText
         android:id="@+id/dosage"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
@@ -133,7 +133,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
-        android:background="@mipmap/yellow_add"
+        android:background="@drawable/yellow_add"
         android:onClick="addTimes"
         app:layout_constraintBottom_toBottomOf="@+id/frequency_hour"
         app:layout_constraintStart_toEndOf="@+id/frequency_hour"
@@ -144,7 +144,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
-        android:background="@mipmap/trash"
+        android:background="@drawable/trash"
         android:onClick="removeTimes"
         app:layout_constraintBottom_toBottomOf="@+id/add_time"
         app:layout_constraintStart_toEndOf="@+id/add_time"
@@ -216,7 +216,7 @@
 
 
     <Button
-        android:id="@+id/change_medication"
+        android:id="@+id/add_medication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -224,21 +224,11 @@
         android:onClick="onAddMedication"
         android:paddingStart="10sp"
         android:paddingEnd="10sp"
-        android:text="@string/change_medication_button"
+        android:text="@string/add_med_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/unit_text"
-        android:layout_width="86dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="8dp"
-        android:text="Unit"
-        app:layout_constraintBottom_toBottomOf="@+id/dosage"
-        app:layout_constraintStart_toEndOf="@+id/dosage"
-        app:layout_constraintTop_toTopOf="@+id/dosage" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
