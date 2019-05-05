@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class AddMedication extends AppCompatActivity {
-    CheckBox take_with_food, take_with_water, sun, mon, tues, wed, thurs, fri, sat;
+    CheckBox take_with_food, take_with_water;
     EditText dosage, special_instructions;
     Spinner unit, frequency;
     Button add_time, add_medication;
@@ -47,13 +47,6 @@ public class AddMedication extends AppCompatActivity {
         //Initialize Checkboxes
         take_with_food = findViewById(R.id.take_with_food);
         take_with_water = findViewById(R.id.take_with_water);
-        sun = findViewById(R.id.checkBox_sun);
-        mon = findViewById(R.id.checkBox_mon);
-        tues = findViewById(R.id.checkBox_tues);
-        wed = findViewById(R.id.checkBox_wed);
-        thurs = findViewById(R.id.checkBox_thurs);
-        fri = findViewById(R.id.checkBox_fri);
-        sat = findViewById(R.id.checkBox_sat);
 
         // Initialize Weekday Picker
         weekdaysWidget = (WeekdaysPicker) findViewById(R.id.weekdays);
@@ -175,15 +168,10 @@ public class AddMedication extends AppCompatActivity {
         try { medTimeFive = allTimes.get(4); }
         catch (IndexOutOfBoundsException e) {}
 
-        //String days = "";
-        List<String> selectedDays = weekdaysWidget.getSelectedDaysText();
-        //for (String day : selectedDays) {
-            //days += day + " ";
-        //}
-        //Log.d("weekdays", days);
-
         if (take_with_food.isChecked()) { takeWithFoodEntry = "yes"; }
         if (take_with_water.isChecked()) { takeWithWaterEntry = "yes"; }
+
+        List<String> selectedDays = weekdaysWidget.getSelectedDaysText();
         if (selectedDays.contains("Sunday")) { sunday = "yes"; }
         if (selectedDays.contains("Monday")) { monday = "yes"; }
         if (selectedDays.contains("Tuesday")) { tuesday = "yes"; }
@@ -191,16 +179,6 @@ public class AddMedication extends AppCompatActivity {
         if (selectedDays.contains("Thursday")) { thursday = "yes"; }
         if (selectedDays.contains("Friday")) { friday = "yes"; }
         if (selectedDays.contains("Saturday")) { saturday = "yes"; }
-
-        /*if (take_with_food.isChecked()) { takeWithFoodEntry = "yes"; }
-        if (take_with_water.isChecked()) { takeWithWaterEntry = "yes"; }
-        if (sun.isChecked()) { sunday = "yes"; }
-        if (mon.isChecked()) { monday = "yes"; }
-        if (tues.isChecked()) { tuesday = "yes"; }
-        if (wed.isChecked()) { wednesday = "yes"; }
-        if (thurs.isChecked()) { thursday = "yes"; }
-        if (fri.isChecked()) { friday = "yes"; }
-        if (sat.isChecked()) { saturday = "yes"; }*/
 
         if (special_instructions.getText().toString().equals("")) {
             instr = null;
