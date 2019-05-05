@@ -3,9 +3,13 @@ package com.example.ourx;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.dpro.widgets.WeekdaysPicker;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class AddMedication extends AppCompatActivity {
     CheckBox take_with_food, take_with_water, sun, mon, tues, wed, thurs, fri, sat;
@@ -26,8 +32,7 @@ public class AddMedication extends AppCompatActivity {
     ArrayList<String> allTimes;
     ArrayAdapter<String> adapter;
     TextView medication_name;
-
-    private static int currentMedId = 2;
+    WeekdaysPicker weekdaysWidget;
 
     static final int REQUEST_CODE = 1;
     @Override
@@ -49,6 +54,10 @@ public class AddMedication extends AppCompatActivity {
         thurs = findViewById(R.id.checkBox_thurs);
         fri = findViewById(R.id.checkBox_fri);
         sat = findViewById(R.id.checkBox_sat);
+
+        // Initialize Weekday Picker
+        weekdaysWidget = (WeekdaysPicker) findViewById(R.id.weekdays);
+        weekdaysWidget.setSelectedDays(new ArrayList<Integer>()); // Nothing selected by default
 
         //Initialize Text Boxes
         dosage = findViewById(R.id.dosage);
@@ -126,6 +135,11 @@ public class AddMedication extends AppCompatActivity {
             requiredFieldsFilledIn = false;
         }
 
+        else if (weekdaysWidget.noDaySelected()) {
+            Snackbar.make(add_medication, "Please select at least one day.", Snackbar.LENGTH_SHORT).show();
+            requiredFieldsFilledIn = false;
+        }
+
         if (!requiredFieldsFilledIn) {
             return false;
         }
@@ -161,7 +175,24 @@ public class AddMedication extends AppCompatActivity {
         try { medTimeFive = allTimes.get(4); }
         catch (IndexOutOfBoundsException e) {}
 
+        //String days = "";
+        List<String> selectedDays = weekdaysWidget.getSelectedDaysText();
+        //for (String day : selectedDays) {
+            //days += day + " ";
+        //}
+        //Log.d("weekdays", days);
+
         if (take_with_food.isChecked()) { takeWithFoodEntry = "yes"; }
+        if (take_with_water.isChecked()) { takeWithWaterEntry = "yes"; }
+        if (selectedDays.contains("Sunday")) { sunday = "yes"; }
+        if (selectedDays.contains("Monday")) { monday = "yes"; }
+        if (selectedDays.contains("Tuesday")) { tuesday = "yes"; }
+        if (selectedDays.contains("Wednesday")) { wednesday = "yes"; }
+        if (selectedDays.contains("Thursday")) { thursday = "yes"; }
+        if (selectedDays.contains("Friday")) { friday = "yes"; }
+        if (selectedDays.contains("Saturday")) { saturday = "yes"; }
+
+        /*if (take_with_food.isChecked()) { takeWithFoodEntry = "yes"; }
         if (take_with_water.isChecked()) { takeWithWaterEntry = "yes"; }
         if (sun.isChecked()) { sunday = "yes"; }
         if (mon.isChecked()) { monday = "yes"; }
@@ -169,7 +200,7 @@ public class AddMedication extends AppCompatActivity {
         if (wed.isChecked()) { wednesday = "yes"; }
         if (thurs.isChecked()) { thursday = "yes"; }
         if (fri.isChecked()) { friday = "yes"; }
-        if (sat.isChecked()) { saturday = "yes"; }
+        if (sat.isChecked()) { saturday = "yes"; }*/
 
         if (special_instructions.getText().toString().equals("")) {
             instr = null;
@@ -188,7 +219,6 @@ public class AddMedication extends AppCompatActivity {
 
         /* Inserts the entity into the database */
         medicineViewModel.insert(medicineEntity);
-        currentMedId++; // tracks the current medID. Hardcoded to start at 2 because initial population is 1. Need to fix.
 
         finish();
         return true;

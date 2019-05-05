@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_add) {
             Intent intent = new Intent(MainActivity.this, AddMedication.class);
-            //startActivityForResult(intent, REQUEST_CODE);
             startActivity(intent);
             return true;
         }
