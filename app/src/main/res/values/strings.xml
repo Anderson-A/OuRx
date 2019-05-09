@@ -119,4 +119,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="add_med_button">Add Medication</string>
+    <string name="medication_name_default">Name</string>
+    <string name="change_medication_button">Change Medication</string>
+    <string name="action_edit">Edit Medication</string>
 </resources>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/medication_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/medication_name_default"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dosage_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/add_dosage"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medication_name"
+        tools:text="@string/add_dosage" />
+
+    <EditText
+        android:id="@+id/dosage"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="@string/add_enter_dosage"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dosage_text"
+        app:layout_constraintStart_toEndOf="@+id/dosage_text"
+        app:layout_constraintTop_toTopOf="@+id/dosage_text" />
+
+    <Spinner
+        android:id="@+id/dosage_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:entries="@array/unit_options"
+        app:layout_constraintBottom_toBottomOf="@+id/dosage"
+        app:layout_constraintStart_toEndOf="@+id/dosage"
+        app:layout_constraintTop_toTopOf="@+id/dosage" />
+
+    <TextView
+        android:id="@+id/take_with_food_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/add_food"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dosage_text"
+        tools:text="@string/add_food" />
+
+    <CheckBox
+        android:id="@+id/take_with_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/take_with_food_text"
+        app:layout_constraintStart_toEndOf="@+id/take_with_food_text"
+        app:layout_constraintTop_toTopOf="@+id/take_with_food_text" />
+
+    <TextView
+        android:id="@+id/take_with_water_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/add_water"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/take_with_food"
+        app:layout_constraintStart_toEndOf="@+id/take_with_food"
+        app:layout_constraintTop_toTopOf="@+id/take_with_food"
+        tools:text="@string/add_water" />
+
+    <CheckBox
+        android:id="@+id/take_with_water"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/take_with_water_text"
+        app:layout_constraintStart_toEndOf="@+id/take_with_water_text"
+        app:layout_constraintTop_toTopOf="@+id/take_with_water_text" />
+
+    <TextView
+        android:id="@+id/frequency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/add_frequency"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/take_with_food_text"
+        tools:text="@string/add_frequency" />
+
+    <Spinner
+        android:id="@+id/frequency_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:entries="@array/hours"
+        app:layout_constraintBottom_toBottomOf="@+id/frequency_text"
+        app:layout_constraintStart_toEndOf="@+id/frequency_text"
+        app:layout_constraintTop_toTopOf="@+id/frequency_text" />
+
+    <Button
+        android:id="@+id/add_time"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/yellow_add"
+        android:onClick="addTimes"
+        app:layout_constraintBottom_toBottomOf="@+id/frequency_hour"
+        app:layout_constraintStart_toEndOf="@+id/frequency_hour"
+        app:layout_constraintTop_toTopOf="@+id/frequency_hour" />
+
+    <Button
+        android:id="@+id/undo_time"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/trash"
+        android:onClick="removeTimes"
+        app:layout_constraintBottom_toBottomOf="@+id/add_time"
+        app:layout_constraintStart_toEndOf="@+id/add_time"
+        app:layout_constraintTop_toTopOf="@+id/add_time" />
+
+    <ListView
+        android:id="@+id/times"
+        android:layout_width="90dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/undo_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/undo_time"
+        app:layout_constraintTop_toTopOf="@+id/undo_time" />
+
+    <TextView
+        android:id="@+id/reminder_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/add_reminder"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frequency_text"
+        tools:text="@string/add_reminder" />
+
+
+    <com.dpro.widgets.WeekdaysPicker
+        android:id="@+id/weekdays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:highlight_color="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/reminder_text"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/special_instructions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:text="@string/add_special_instructions"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weekdays"
+        tools:text="@string/add_special_instructions" />
+
+    <EditText
+        android:id="@+id/special_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/add_enter_instructions"
+        android:inputType="text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/special_instructions_text"
+        app:layout_constraintStart_toEndOf="@+id/special_instructions_text"
+        app:layout_constraintTop_toTopOf="@+id/special_instructions_text" />
+
+
+    <Button
+        android:id="@+id/add_medication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@color/colorPrimary"
+        android:onClick="onAddMedication"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp"
+        android:text="@string/add_med_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

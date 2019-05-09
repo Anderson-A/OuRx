@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_cabinet"
             android:icon="@drawable/ic_menu_medicine"
@@ -22,7 +22,7 @@
             android:title="@string/nav_menu_map" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_action_settings"
+            android:icon="@drawable/ic_menu_settings"
             android:title="@string/action_settings"/>
     </group>
 

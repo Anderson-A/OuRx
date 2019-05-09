@@ -1,9 +1,6 @@
 package com.example.ourx;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,24 +12,26 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dpro.widgets.WeekdaysPicker;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.lifecycle.ViewModelProviders;
 
 public class MedicationInfo extends AppCompatActivity {
-    CheckBox take_with_food, take_with_water, sun, mon, tues, wed, thurs, fri, sat;
+    CheckBox take_with_food, take_with_water;
     EditText dosage, special_instructions;
     Spinner unit, frequency;
-    Button add_time, add_medication;
+    Button add_time, change_medication;
     ListView times;
     ArrayList<String> allTimes;
     ArrayAdapter<String> adapter;
     TextView medication_name, unit_text;
+    WeekdaysPicker weekdaysWidget;
     MedicineEntity dataMedicine;
 
 
@@ -41,11 +40,10 @@ public class MedicationInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.medication_info);
+        setContentView(R.layout.activity_medication_info);
 
      //   Log.d("list of meds", medicineList.get(0).getMED_NAME());
      //   Log.d("list of meds", "HELLO LOOK AT ME");
-
 
         //Initialize Medication Name
         medication_name = findViewById(R.id.medication_name);
@@ -53,13 +51,10 @@ public class MedicationInfo extends AppCompatActivity {
         //Initialize Checkboxes
         take_with_food = findViewById(R.id.take_with_food);
         take_with_water = findViewById(R.id.take_with_water);
-        sun = findViewById(R.id.checkBox_sun);
-        mon = findViewById(R.id.checkBox_mon);
-        tues = findViewById(R.id.checkBox_tues);
-        wed = findViewById(R.id.checkBox_wed);
-        thurs = findViewById(R.id.checkBox_thurs);
-        fri = findViewById(R.id.checkBox_fri);
-        sat = findViewById(R.id.checkBox_sat);
+
+        // Initialize Weekday Picker
+        weekdaysWidget = (WeekdaysPicker) findViewById(R.id.weekdays);
+        weekdaysWidget.setSelectedDays(new ArrayList<Integer>()); // Nothing selected by default
 
         //Initialize Text Boxes
         dosage = findViewById(R.id.dosage);
@@ -72,7 +67,7 @@ public class MedicationInfo extends AppCompatActivity {
 
         //Initialize Buttons
         add_time = findViewById(R.id.add_time);
-        add_medication = findViewById(R.id.add_medication);
+        change_medication = findViewById(R.id.change_medication);
 
         //Initialize List
         times = findViewById(R.id.times);
@@ -105,16 +100,19 @@ public class MedicationInfo extends AppCompatActivity {
         if (dataMedicine.getMED_TIME_FOUR() != null) { allTimes.add(dataMedicine.getMED_TIME_FOUR()); }
         if (dataMedicine.getMED_TIME_FIVE() != null) { allTimes.add(dataMedicine.getMED_TIME_FIVE()); }
 
-        if (dataMedicine.getMED_SUN() != null) { sun.setChecked(true); }
-        if (dataMedicine.getMED_MON() != null) { mon.setChecked(true); }
-        if (dataMedicine.getMED_TUES() != null) { tues.setChecked(true); }
-        if (dataMedicine.getMED_WED() != null) { wed.setChecked(true); }
-        if (dataMedicine.getMED_THURS() != null) { thurs.setChecked(true); }
-        if (dataMedicine.getMED_FRI() != null) { fri.setChecked(true); }
-        if (dataMedicine.getMED_SAT() != null) { sat.setChecked(true); }
+        List<Integer> medDays = new ArrayList<>();
+        if (dataMedicine.getMED_SUN() != null) { medDays.add(Calendar.SUNDAY); }
+        if (dataMedicine.getMED_MON() != null) { medDays.add(Calendar.MONDAY); }
+        if (dataMedicine.getMED_TUES() != null) { medDays.add(Calendar.TUESDAY); }
+        if (dataMedicine.getMED_WED() != null) { medDays.add(Calendar.WEDNESDAY); }
+        if (dataMedicine.getMED_THURS() != null) { medDays.add(Calendar.THURSDAY); }
+        if (dataMedicine.getMED_FRI() != null) { medDays.add(Calendar.FRIDAY); }
+        if (dataMedicine.getMED_SAT() != null) { medDays.add(Calendar.SATURDAY); }
+        weekdaysWidget.setSelectedDays(medDays);
 
         if (dataMedicine.getMED_INSTRUCT() != null) { special_instructions.setText(dataMedicine.getMED_INSTRUCT()); }
 
+        lockLayout();
     }
 
     @Override
@@ -139,17 +137,11 @@ public class MedicationInfo extends AppCompatActivity {
     }
 
     public void unlockLayout() {
-        Snackbar snackbar = Snackbar.make(add_medication, "You may now edit this medication.", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(change_medication, "You may now edit this medication.", Snackbar.LENGTH_SHORT);
         snackbar.show();
         take_with_food.setClickable(true);
         take_with_water.setClickable(true);
-        sun.setClickable(true);
-        mon.setClickable(true);
-        tues.setClickable(true);
-        wed.setClickable(true);
-        thurs.setClickable(true);
-        fri.setClickable(true);
-        sat.setClickable(true);
+        weekdaysWidget.setEditable(true);
 
         dosage.setLongClickable(true);
         dosage.setFocusableInTouchMode(true);
@@ -161,23 +153,15 @@ public class MedicationInfo extends AppCompatActivity {
 
         unit.setVisibility(View.VISIBLE);
         frequency.setVisibility(View.VISIBLE);
-        add_medication.setVisibility(View.VISIBLE);
+        change_medication.setVisibility(View.VISIBLE);
 
         unit_text.setVisibility(View.INVISIBLE);
     }
 
     public void lockLayout() {
-        Snackbar snackbar = Snackbar.make(add_medication, "Changes saved.", Snackbar.LENGTH_SHORT);
-        snackbar.show();
         take_with_food.setClickable(false);
         take_with_water.setClickable(false);
-        sun.setClickable(false);
-        mon.setClickable(false);
-        tues.setClickable(false);
-        wed.setClickable(false);
-        thurs.setClickable(false);
-        fri.setClickable(false);
-        sat.setClickable(false);
+        weekdaysWidget.setEditable(false);
 
         dosage.setLongClickable(false);
         dosage.setFocusableInTouchMode(false);
@@ -191,7 +175,7 @@ public class MedicationInfo extends AppCompatActivity {
 
         unit.setVisibility(View.INVISIBLE);
         frequency.setVisibility(View.INVISIBLE);
-        add_medication.setVisibility(View.INVISIBLE);
+        change_medication.setVisibility(View.INVISIBLE);
 
         unit_text.setText(unit.getSelectedItem().toString());
         unit_text.setVisibility(View.VISIBLE);
@@ -200,7 +184,7 @@ public class MedicationInfo extends AppCompatActivity {
     public void addTimes(View v) {
         String item = frequency.getSelectedItem().toString();
         if (allTimes.contains(item)) {
-            Snackbar snackbar = Snackbar.make(add_medication, "You have already added " + item + ".", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(change_medication, "You have already added " + item + ".", Snackbar.LENGTH_SHORT);
             snackbar.show();
         } else {
             allTimes.add(item);
@@ -214,31 +198,36 @@ public class MedicationInfo extends AppCompatActivity {
             allTimes.remove(item);
             adapter.notifyDataSetChanged();
         } else {
-            Snackbar snackbar = Snackbar.make(add_medication, "You have not added " + item + ".", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(change_medication, "You have not added " + item + ".", Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
     }
 
     public boolean onAddMedication(View v) {
 
-        ViewModelProviders.of(this).get(MedicineViewModel.class).delete(dataMedicine);
+        int editingID = dataMedicine.getMid();
 
         final MedicineViewModel medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
         boolean requiredFieldsFilledIn = true;
         if (dosage.getText().toString().equals("")) {
             dosage.requestFocus();
-            Snackbar.make(add_medication, "Please enter a dosage.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "Please enter a dosage.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
         else if (allTimes.size() == 0) {
-            Snackbar.make(add_medication, "Please enter at least one time.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "Please enter at least one time.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
         else if (allTimes.size() > 5) {
-            Snackbar.make(add_medication, "No More than 5 times.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(change_medication, "No More than 5 times.", Snackbar.LENGTH_SHORT).show();
+            requiredFieldsFilledIn = false;
+        }
+
+        else if (weekdaysWidget.noDaySelected()) {
+            Snackbar.make(change_medication, "Please select at least one day.", Snackbar.LENGTH_SHORT).show();
             requiredFieldsFilledIn = false;
         }
 
@@ -279,13 +268,15 @@ public class MedicationInfo extends AppCompatActivity {
 
         if (take_with_food.isChecked()) { takeWithFoodEntry = "yes"; }
         if (take_with_water.isChecked()) { takeWithWaterEntry = "yes"; }
-        if (sun.isChecked()) { sunday = "yes"; }
-        if (mon.isChecked()) { monday = "yes"; }
-        if (tues.isChecked()) { tuesday = "yes"; }
-        if (wed.isChecked()) { wednesday = "yes"; }
-        if (thurs.isChecked()) { thursday = "yes"; }
-        if (fri.isChecked()) { friday = "yes"; }
-        if (sat.isChecked()) { saturday = "yes"; }
+
+        List<String> selectedDays = weekdaysWidget.getSelectedDaysText();
+        if (selectedDays.contains("Sunday")) { sunday = "yes"; }
+        if (selectedDays.contains("Monday")) { monday = "yes"; }
+        if (selectedDays.contains("Tuesday")) { tuesday = "yes"; }
+        if (selectedDays.contains("Wednesday")) { wednesday = "yes"; }
+        if (selectedDays.contains("Thursday")) { thursday = "yes"; }
+        if (selectedDays.contains("Friday")) { friday = "yes"; }
+        if (selectedDays.contains("Saturday")) { saturday = "yes"; }
 
         if (special_instructions.getText().toString().equals("")) {
             instr = null;
@@ -294,7 +285,7 @@ public class MedicationInfo extends AppCompatActivity {
         }
 
         /* Creates a new medication entry based on entered data */
-        MedicineEntity medicineEntity = new MedicineEntity(0, medication_name.getText().toString(),
+        MedicineEntity medicineEntity = new MedicineEntity(editingID, medication_name.getText().toString(),
                 dosage.getText().toString(), unit.getSelectedItem().toString(), takeWithFoodEntry,
                 takeWithWaterEntry, medTimeOne, medTimeTwo, medTimeThree, medTimeFour,
                 medTimeFive, sunday, monday, tuesday, wednesday, thursday, friday,
@@ -303,8 +294,10 @@ public class MedicationInfo extends AppCompatActivity {
                 "false", "false", "false");
 
         /* Inserts the entity into the database */
-        medicineViewModel.insert(medicineEntity);
+        medicineViewModel.update(medicineEntity);
 
+        Snackbar snackbar = Snackbar.make(change_medication, "Changes saved.", Snackbar.LENGTH_SHORT);
+        snackbar.show();
         lockLayout();
         return true;
     }

@@ -189,7 +189,7 @@ public class ScheduleFragment extends Fragment {
             //update the dao
             medicineViewModel.update(cardToMigrate );
 
-            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " moved ", Snackbar.LENGTH_LONG);
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.getMED_NAME() + " moved ", Snackbar.LENGTH_LONG);
             migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
@@ -217,7 +217,7 @@ public class ScheduleFragment extends Fragment {
 
             medicineViewModel.update(cardToMigrate );
 
-            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.MED_NAME + " skipped ", Snackbar.LENGTH_LONG);
+            Snackbar migrateSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToMigrate.getMED_NAME() + " skipped ", Snackbar.LENGTH_LONG);
             migrateSnack.setAction("Undo", new ScheduleFragment.undoListener(index));
             migrateSnack.show();
 
@@ -325,13 +325,13 @@ public class ScheduleFragment extends Fragment {
         Log.d("SIZE OF MEDS", Integer.toString(meds.size()));
         for (MedicineEntity med : meds) {
             Calendar time = Calendar.getInstance();
-            if (time.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && med.MED_SUN != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY && med.MED_MON != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY && med.MED_TUES != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY && med.MED_WED != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY && med.MED_THURS != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && med.MED_FRI != null
-                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY && med.MED_SAT != null) {
+            if (time.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY && med.getMED_SUN() != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY && med.getMED_MON() != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY && med.getMED_TUES() != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY && med.getMED_WED() != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY && med.getMED_THURS() != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && med.getMED_FRI() != null
+                    || time.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY && med.getMED_SAT() != null) {
                 boolean taken = false;
                 boolean skipped = false;
                 if (med.TIME_ONE_TAKEN.equals("true")) {
@@ -344,47 +344,47 @@ public class ScheduleFragment extends Fragment {
                 /* TODO: find solution to distinguish what time something has been taken
                  * Idea 1: have 5 columns (taken 1, taken 2, etc)
                  * Idea 2: original idea of a new entry for each time. Updating problem. */
-                medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_ONE, taken, skipped));
+                medCards.add(new MedicineCard(med.getMED_NAME(), med.getMED_TIME_ONE(), taken, skipped));
                 taken = false;
                 skipped = false;
                 /* Displays each new time instance as a new card */
-                if (med.MED_TIME_TWO != null) {
+                if (med.getMED_TIME_TWO() != null) {
                     if(med.TIME_TWO_TAKEN.equals("true"))
                         taken = true;
                     if (med.TIME_TWO_SKIPPED.equals("true")) {
                         skipped = true;
                     }
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_TWO, taken, skipped));
+                    medCards.add(new MedicineCard(med.getMED_NAME(), med.getMED_TIME_TWO(), taken, skipped));
                     taken = false;
                     skipped = false;
                 }
-                if (med.MED_TIME_THREE != null) {
+                if (med.getMED_TIME_THREE() != null) {
                     if(med.TIME_THREE_TAKEN.equals("true"))
                         taken = true;
                     if (med.TIME_THREE_SKIPPED.equals("true")) {
                         skipped = true;
                     }
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_THREE, taken, skipped));
+                    medCards.add(new MedicineCard(med.getMED_NAME(), med.getMED_TIME_THREE(), taken, skipped));
                     taken = false;
                     skipped = false;
                 }
-                if (med.MED_TIME_FOUR != null) {
+                if (med.getMED_TIME_FOUR() != null) {
                     if(med.TIME_FOUR_TAKEN.equals("true"))
                         taken = true;
                     if (med.TIME_FOUR_SKIPPED.equals("true")) {
                         skipped = true;
                     }
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FOUR, taken, skipped));
+                    medCards.add(new MedicineCard(med.getMED_NAME(), med.getMED_TIME_FOUR(), taken, skipped));
                     taken = false;
                     skipped = false;
                 }
-                if (med.MED_TIME_FIVE != null) {
+                if (med.getMED_TIME_FIVE() != null) {
                     if(med.TIME_FIVE_TAKEN.equals("true"))
                         taken = true;
                     if (med.TIME_FIVE_SKIPPED.equals("true")) {
                         skipped = true;
                     }
-                    medCards.add(new MedicineCard(med.MED_NAME, med.MED_TIME_FIVE, taken, skipped));
+                    medCards.add(new MedicineCard(med.getMED_NAME(), med.getMED_TIME_FIVE(), taken, skipped));
                 }
             }
         }

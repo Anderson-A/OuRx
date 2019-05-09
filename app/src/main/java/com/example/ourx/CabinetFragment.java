@@ -72,8 +72,6 @@ public class CabinetFragment extends ListFragment {
         medicineViewModel.getAllMeds().observe(this, new Observer<List<MedicineEntity>>() {
             @Override
             public void onChanged(@Nullable final List<MedicineEntity> meds) {
-                /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete line
-                medications = entityToCabCard(meds); */
                 final CabinetCardAdapter adapter = new CabinetCardAdapter(getActivity(), meds);
                 setListAdapter(adapter);
             }
@@ -109,7 +107,7 @@ public class CabinetFragment extends ListFragment {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
             cardToDelete = (MedicineEntity) getListAdapter().getItem(index);
-            Snackbar deleteSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToDelete.MED_NAME + " deleted", Snackbar.LENGTH_LONG);
+            Snackbar deleteSnack = Snackbar.make(getActivity().findViewById(R.id.mainCoordinatorLayout), "" + cardToDelete.getMED_NAME() + " deleted", Snackbar.LENGTH_LONG);
             deleteSnack.setAction("Undo", new undoListener());
             deleteSnack.show();
 
@@ -133,20 +131,6 @@ public class CabinetFragment extends ListFragment {
     public void undoDeletion() {
         ViewModelProviders.of(this).get(MedicineViewModel.class).insert(cardToDelete);
     }
-
-    /* No longer used now that CabinetCardAdapter uses MedicineEntity directly TODO: delete method
-    Turns medicine entities into cabinet cards to display in schedule
-    private ArrayList<CabinetCard> entityToCabCard(List<MedicineEntity> meds) {
-        ArrayList<CabinetCard> cabinetCards = new ArrayList<>();
-        for (MedicineEntity med : meds) {
-            cabinetCards.add(new CabinetCard(
-                    med.MED_NAME,
-                    med.MED_DOSAGE,
-                    med.MED_UNIT,
-                    med.MED_INSTRUCT));
-        }
-        return cabinetCards;
-    }*/
 
     // Called at the start of the active lifetime.
     @Override

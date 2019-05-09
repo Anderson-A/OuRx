@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="16dp"
-        android:background="@mipmap/pill_bottle"
+        android:background="@drawable/pill_bottle"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:padding="10dp"
-        android:textSize="15dp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/pill_image"
         app:layout_constraintStart_toEndOf="@+id/pill_image"
         app:layout_constraintTop_toTopOf="@+id/pill_image" />
