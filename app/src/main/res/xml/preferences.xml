@@ -8,11 +8,6 @@
         android:title="@string/notifications_switch_title" />
     <SwitchPreference
         android:defaultValue="false"
-        android:key="password_switch"
-        android:summary="@string/password_switch_summary"
-        android:title="@string/password_switch_title" />
-    <SwitchPreference
-        android:defaultValue="false"
         android:key="location_switch"
         android:summary="@string/location_switch_summary"
         android:title="@string/location_switch_title" />

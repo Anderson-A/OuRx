@@ -5,7 +5,7 @@
     android:id="@+id/med_card"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    android:background="@drawable/med_card_background"
+    android:background="?attr/backgroundColor"
     android:orientation="horizontal">
 
     <ImageView
@@ -30,6 +30,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:padding="10dp"
+        android:textColor="?attr/textColor"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:padding="10dp"
+        android:textColor="?attr/textColor"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/pill_image"
         app:layout_constraintStart_toEndOf="@+id/pill_image"

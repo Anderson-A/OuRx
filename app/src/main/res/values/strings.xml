@@ -110,10 +110,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="activity_settings">Settings</string>
     <string name="activity_add_medication">Add</string>
-    <string name="password_switch_title">Require Password on Start</string>
     <string name="location_switch_title">Location Services</string>
     <string name="night_switch_title">Night Mode</string>
-    <string name="password_switch_summary">Require a password when the app is first started</string>
     <string name="location_switch_summary">Allow this app to determine your location</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#C99F44</color>
     <color name="colorAccent">#90A4AE</color>
     <color name="titleColor">#000000</color>
+    <color name="lightBackground">#FAFAFA</color>
+    <color name="lightCard">#FFFFFF</color>
+    <color name="lightText">#000000</color>
+    <color name="nightBackground">#000000</color>
+    <color name="nightCard">#424242</color>
+    <color name="nightText">#FFFFFF</color>
 </resources>
