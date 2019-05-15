@@ -86,6 +86,19 @@ Sprint 2 README
  - Notifications
  - Improve maps functionality
  - TEST!!!!!
+---------------------------------------- 
+Third Sprint
+The primary goal of this sprint was to fix some of the issues that were discovered after the second sprint. We were able
+to fix a fair amount of the issues, but we were unable to fix the layout problem with the Medication Schedule on the small
+screen. We also tested on various emulators at various APIs to try and get a good idea of what did not work and of what did work.
+1) Layout should be locked on rotation
+2) Fixed crash in API 18
+3) Fixed name getting cut off in on medicine card
+4) Tried to get notifications working
+Thank you for a great semester!
+
+
+-----------------------------------------
  
  Note:
  For sources, there was a video I watched that explained how to do the searching that was implemented in Add Medication. I searched for this
