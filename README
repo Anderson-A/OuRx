@@ -94,10 +94,8 @@ screen. We also tested on various emulators at various APIs to try and get a goo
 1) Layout should be locked on rotation
 2) Fixed crash in API 18
 3) Fixed name getting cut off in on medicine card
-4) Tried to get notifications working
+4) Tried to get notifications working but was unable to get them working properly
 Thank you for a great semester!
-
-
 -----------------------------------------
  
  Note:
